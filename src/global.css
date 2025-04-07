@@ -1,3 +1,9 @@
+@import 'tailwindcss';
+
+@plugin 'flowbite/plugin';
+
+@source "../node_modules/flowbite-qwik";
+
 /**
  * WHAT IS THIS FILE?
  *
@@ -5,6 +11,72 @@
  * the styles in here will be applied to the Document, without any sort of CSS scoping.
  *
  */
+
+/* font family museomoderno */
+@font-face {
+  font-family: MuseoModerno;
+  font-weight: 400;
+  src: url('/fonts/MuseoModerno-Regular.woff2');
+}
+@font-face {
+  font-family: MuseoModerno;
+  font-weight: 500;
+  src: url('/fonts/MuseoModerno-Medium.woff2');
+}
+@font-face {
+  font-family: MuseoModerno;
+  font-weight: 600;
+  src: url('/fonts/MuseoModerno-SemiBold.woff2');
+}
+@font-face {
+  font-family: MuseoModerno;
+  font-weight: 700;
+  src: url('/fonts/MuseoModerno-Bold.woff2');
+}
+
+/* font family poppins */
+@font-face {
+  font-family: Poppins;
+  font-weight: 400;
+  src: url('/fonts/Poppins-Regular.woff2');
+}
+@font-face {
+  font-family: Poppins;
+  font-weight: 500;
+  src: url('/fonts/Poppins-Medium.woff2');
+}
+@font-face {
+  font-family: Poppins;
+  font-weight: 600;
+  src: url('/fonts/Poppins-SemiBold.woff2');
+}
+@font-face {
+  font-family: Poppins;
+  font-weight: 700;
+  src: url('/fonts/Poppins-Bold.woff2');
+}
+
+/* font family inter */
+@font-face {
+  font-family: Inter;
+  font-weight: 400;
+  src: url('/fonts/Inter-Regular.woff2');
+}
+@font-face {
+  font-family: Inter;
+  font-weight: 500;
+  src: url('/fonts/Inter-Medium.woff2');
+}
+@font-face {
+  font-family: Inter;
+  font-weight: 600;
+  src: url('/fonts/Inter-SemiBold.woff2');
+}
+@font-face {
+  font-family: Inter;
+  font-weight: 700;
+  src: url('/fonts/Inter-Bold.woff2');
+}
 
 :root {
   --qwik-dark-blue: #006ce9;
@@ -14,6 +86,290 @@
   --qwik-dirty-black: #1d2033;
   --qwik-dark-background: #151934;
   --qwik-dark-text: #ffffff;
+}
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 47.4% 11.2%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 47.4% 11.2%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --primary: 12 6.5% 15.1%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 222.2 47.4% 11.2%;
+    --secondary-foreground: 0 0% 100%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --alert: 0 84.2% 60.2%;
+    --alert-foreground: 210 40% 98%;
+    --ring: 222.2 47.4% 11.2%;
+    --border-width: 0px;
+    --border-radius: 0;
+    --shadow-base: 0 1px 2px 0 rgba(0, 0, 0, 0.01);
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.1), 0 1px 5px 0px rgba(0, 0, 0, 0.1);
+    --shadow-md:
+      0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+    --shadow-lg:
+      0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+    --shadow-xl:
+      0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 1);
+    --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.01);
+    --transform-press: scale(0.95);
+  }
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --primary: 20 5.9% 90%;
+    --primary-foreground: 0 0% 0%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 0 0% 0%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --alert: 0 84.2% 60.2%;
+    --alert-foreground: 210 40% 98%;
+    --ring: 212.7 26.8% 83.9;
+    --border-width: 0px;
+    --border-radius: 0;
+    --shadow-base: 0 1px 2px 0 rgba(0, 0, 0, 0.01);
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.1), 0 1px 5px 0px rgba(0, 0, 0, 0.1);
+    --shadow-md:
+      0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+    --shadow-lg:
+      0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+    --shadow-xl:
+      0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 1);
+    --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.01);
+    --transform-press: scale(0.95);
+  }
+
+  
+  .dark {
+    color-scheme: dark;
+    background: #141414;
+  }
+  .light {
+    color-scheme: light;
+    background: #141414;
+  }
+}
+
+@layer theme {
+  .dark {
+    --color-bgContrast: #111827;
+  }
+}
+
+
+@theme {
+  --color-bgContrast: #fff;
+
+  --animate-from-left: slideFromLeft 0.2s 1;
+  --animate-from-right: slideFromRight 0.2s 1;
+
+  --min-width-screen-lg: 1024px;
+
+  --container-8xl: 90rem;
+
+  @keyframes slideFromLeft {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+  @keyframes slideFromRight {
+    0% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+
+  --color-green-50: #ecfdf5;
+  --color-green-100: #d1fae5;
+  --color-green-200: #a7f3d0;
+  --color-green-300: #6ee7b7;
+  --color-green-400: #34d399;
+  --color-green-500: #10b981;
+  --color-green-600: #059669;
+  --color-green-700: #047857;
+  --color-green-800: #065f46;
+  --color-green-900: #064e3b;
+  --color-green-950: oklch(.266 .065 152.934);
+
+  --color-pink-50: #fdf2f8;
+  --color-pink-100: #fce7f3;
+  --color-pink-200: #fbcfe8;
+  --color-pink-300: #f9a8d4;
+  --color-pink-400: #f472b6;
+  --color-pink-500: #ec4899;
+  --color-pink-600: #db2777;
+  --color-pink-700: #be185d;
+  --color-pink-800: #9d174d;
+  --color-pink-900: #831843;
+
+  --color-purple-50: #f5f3ff;
+  --color-purple-100: #ede9fe;
+  --color-purple-200: #ddd6fe;
+  --color-purple-300: #c4b5fd;
+  --color-purple-400: #a78bfa;
+  --color-purple-500: #8b5cf6;
+  --color-purple-600: #7c3aed;
+  --color-purple-700: #6d28d9;
+  --color-purple-800: #5b21b6;
+  --color-purple-900: #4c1d95;
+  --color-purple-950: oklch(.291 .149 302.717);
+
+  --color-gray-50: #f9fafb;
+  --color-gray-100: #f3f4f6;
+  --color-gray-200: #e5e7eb;
+  --color-gray-300: #d1d5db;
+  --color-gray-400: #9ca3af;
+  --color-gray-500: #6b7280;
+  --color-gray-600: #4b5563;
+  --color-gray-700: #374151;
+  --color-gray-800: #1f2937;
+  --color-gray-900: #111827;
+  --color-gray-950: oklch(.13 .028 261.692);
+
+  --color-blue-50: #eff6ff;
+  --color-blue-100: #dbeafe;
+  --color-blue-200: #bfdbfe;
+  --color-blue-300: #93c5fd;
+  --color-blue-400: #60a5fa;
+  --color-blue-500: #3b82f6;
+  --color-blue-600: #2563eb;
+  --color-blue-700: #1d4ed8;
+  --color-blue-800: #1e40af;
+  --color-blue-900: #1e3a8a;
+  --color-blue-950: oklch(.282 .091 267.935);
+
+  /* --- CUSTOM --- */
+
+  --font-poppins: 'Poppins', 'sans-serif';
+  --font-museomoderno: 'MuseoModerno', 'sans-serif';
+  --font-inter: 'Inter', 'sans-serif';
+
+  --text-display-large: 60px;
+  --text-display-large--line-height: 72.48px;
+  --text-display-large--spacing: -0.6px;
+
+  --text-display-medium: 48px;
+  --text-display-medium--line-height: 57.984px;
+  --text-display-medium--spacing: -0.48px;
+
+  --text-display-small: 36px;
+  --text-display-small--line-height: 43.488px;
+  --text-display-small--spacing: -0.36px;
+
+  --text-h1-large: 60px;
+  --text-h1-large--line-height: 72.48px;
+  --text-h1-large--spacing: -0.6px;
+
+  --text-h1-medium: 48px;
+  --text-h1-medium--line-height: 57.984px;
+  --text-h1-medium--spacing: -0.48px;
+
+  --text-h1-small: 36px;
+  --text-h1-small--line-height: 43.488px;
+  --text-h1-small--spacing: -0.36px;
+
+  --text-h2-large: 36px;
+  --text-h2-large--line-height: 47.628px;
+  --text-h2-large--spacing: -0.36px;
+
+  --text-h2-medium: 32px;
+  --text-h2-medium--line-height: 42.336px;
+  --text-h2-medium--spacing: -0.32px;
+
+  --text-h2-small: 29px;
+  --text-h2-small--line-height: 38.367px;
+  --text-h2-small--spacing: -0.29px;
+
+  --text-h3-large: 26px;
+  --text-h3-large--line-height: 34.4px;
+  --text-h3-large--spacing: -0.26px;
+
+  --text-h3-medium: 23px;
+  --text-h3-medium--line-height: 30.43px;
+  --text-h3-medium--spacing: -0.23px;
+
+  --text-h3-small: 20px;
+  --text-h3-small--line-height: 26.46px;
+  --text-h3-small--spacing: -0.2px;
+
+  --text-label-large: 18px;
+  --text-label-large--line-height: 25.506px;
+  --text-label-large--spacing: 0.36px;
+
+  --text-label-medium: 16px;
+  --text-label-medium--line-height: 22.672px;
+  --text-label-medium--spacing: 0.32px;
+
+  --text-label-small: 14px;
+  --text-label-small--line-height: 19.838px;
+  --text-label-small--spacing: 0.28px;
+
+  --text-body-large: 18px;
+  --text-body-large--line-height: 26.46px;
+  --text-body-large--spacing: 0.18px;
+
+  --text-body-medium: 16px;
+  --text-body-medium--line-height: 23.52px;
+  --text-body-medium--spacing: 0.16px;
+
+  --text-body-small: 14px;
+  --text-body-small--line-height: 20.58px;
+  --text-body-small--spacing: 0.14px;
+
+  --color-primary-0: #F3FAEF;
+  --color-primary-100: #D7EEC9;
+  --color-primary-200: #BAE1A2;
+  --color-primary-300: #9DD57B;
+  --color-primary-400: #80C955;
+  --color-primary-500: #66B238;
+  --color-primary-600: #508B2C;
+  --color-primary-700: #3A6520;
+  --color-primary-800: #243E14;
+  --color-primary-900: #0D1707;
+  --color-primary-white-100: #F6FBF3;
+  --color-primary-white-0: #FCFEFB;
+
+  --color-custom-neutral-0: #FFFFFF;
+  --color-custom-neutral-100: #EBEBEB;
+  --color-custom-neutral-200: #D1D1D1;
+  --color-custom-neutral-300: #B8B8B8;
+  --color-custom-neutral-400: #6B6B6B;
+  --color-custom-neutral-500: #525252;
+  --color-custom-neutral-600: #383838;
+  --color-custom-neutral-700: #1E1E1E;
+  --color-custom-neutral-white-200: #F0F0F0;
+  --color-custom-neutral-white-100: #F5F5F5;
+  --color-custom-neutral-white-0: #FAFAFA;
+
+  --cols-faq: repeat(auto-fit,minmax(360px,1fr));
+  --cols-workflow: repeat(auto-fit,minmax(420px,1fr));
+  --cols-assets: repeat(auto-fill,minmax(420px,1fr));
 }
 
 html {
@@ -27,20 +383,50 @@ html {
     system-ui,
     -apple-system,
     BlinkMacSystemFont,
-    "Segoe UI",
+    'Segoe UI',
     Roboto,
-    "Helvetica Neue",
+    'Helvetica Neue',
     Arial,
-    "Noto Sans",
+    'Noto Sans',
     sans-serif,
-    "Apple Color Emoji",
-    "Segoe UI Emoji",
-    "Segoe UI Symbol",
-    "Noto Color Emoji";
+    'Apple Color Emoji',
+    'Segoe UI Emoji',
+    'Segoe UI Symbol',
+    'Noto Color Emoji';
 }
 
 body {
   padding: 0;
   margin: 0;
   line-height: inherit;
+}
+
+@plugin 'flowbite/plugin';
+
+@source "../node_modules/flowbite-qwik";
+
+@theme {
+  --animate-from-left: slideFromLeft 0.2s 1;
+  --animate-from-right: slideFromRight 0.2s 1;
+
+  --min-width-screen-lg: 1024px;
+
+  --container-8xl: 90rem;
+
+  @keyframes slideFromLeft {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+  @keyframes slideFromRight {
+    0% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
 }
