@@ -30,7 +30,7 @@ export const Button = component$<ButtonProps>(({
 
                 ${variant === "primary" && "bg-primary-400 hover:bg-primary-300 active:bg-primary-400 active:border-[1.5px] active:border-primary-500 text-primary-900"}
 
-                ${variant === "secondary" && "bg-gradient-0 hover:bg-gradient-100 active:bg-gradient-0 active:border-[1.5px] active:border-neutral-600 text-neutral-0"}
+                ${variant === "secondary" && "bg-linear-[90deg,#212121_0%,#2B2B2B_50%,#212121_100%] hover:bg-linear-[90deg,#212121_0%,#333333_50%,#212121_100%] active:bg-linear-[90deg,#212121_0%,#2B2B2B_50%,#212121_100%] active:border-[1.5px] active:border-neutral-600 text-neutral-0"}
 
                 ${variant === "tertiary" && "text-primary-500 hover:text-primary-400 active:text-primary-500"}
 

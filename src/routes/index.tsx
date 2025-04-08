@@ -1,12 +1,20 @@
-import { component$ } from "@builder.io/qwik";
+import { 
+    component$,
+    useSignal,
+    QRL,
+    $
+} from "@builder.io/qwik";
+import { routeLoader$ } from '@builder.io/qwik-city';
 import type { DocumentHead } from "@builder.io/qwik-city";
 
 import { Header } from "~/components/ui-main/header";
 import { Footer } from "~/components/ui-main/footer";
+import { Portfolio } from "~/components/ui-main/portfolio";
 
 import ArrowDown from "~/assets/icons/arrow-down.svg";
 import Pallete from "~/assets/icons/Pallete.svg";
 import Code from "~/assets/icons/Code.svg";
+import { Button } from "~/components/ui-main/button";
 
 export const head: DocumentHead = {
 	title: "Bakau Design",
@@ -17,6 +25,10 @@ export const head: DocumentHead = {
         }
     ]
 };
+
+export const usePortfolio = routeLoader$(async () => {
+    return portfolio;
+});
 
 export default component$(() => {
 	return (
@@ -92,7 +104,7 @@ export default component$(() => {
                     </ul>
                 </section>
 
-				{/* <PortfolioSection /> */}
+				<PortfolioSection />
 
                 <BookAMeetingSection />
 			</main>
@@ -102,99 +114,92 @@ export default component$(() => {
 	);
 });
 
+const PortfolioSection = component$(() => {
+    const data = usePortfolio();
 
+    const sliderRef = useSignal<Element>();
 
-// function PortfolioSection() {
-//     const data = useLoaderData<typeof loader>();
+    const sliderHandler: QRL = $(() => {
+        if (sliderRef.value) {
+            const maxScrollLeft = sliderRef.value.scrollWidth - sliderRef.value.clientWidth;
+            const childWidth = sliderRef.value.firstElementChild?.clientWidth as number;
 
-//     const sliderRef = useRef<null | HTMLElement>(null);
+            if (sliderRef.value.scrollLeft < maxScrollLeft) {
+                sliderRef.value.scrollBy({
+                    left: childWidth + 48,
+                    behavior: 'smooth',
+                });
+            }
+        }
+    });
 
-//     const sliderHandler = () => {
-//         if (sliderRef.current) {
-//             const maxScrollLeft = sliderRef.current.scrollWidth - sliderRef.current.clientWidth;
-//             const childWidth = sliderRef.current.firstElementChild?.clientWidth as number;
-
-//             if (sliderRef.current.scrollLeft < maxScrollLeft) {
-//                 console.info(childWidth, sliderRef.current.clientWidth, window.innerWidth)
-//                 sliderRef.current.scrollBy({
-//                     left: childWidth + 48,
-//                     behavior: 'smooth',
-//                 });
-//             } else {
-//               console.log("Scroll reached the end.");
-//             }
-//         }
-//     }
-
-//     const previousHandler = () => {
-//         if (sliderRef.current) {
-//             const childWidth = sliderRef.current.firstElementChild?.clientWidth as number;
-//             const scrollAmount = childWidth;
+    const previousHandler: QRL = $(() => {
+        if (sliderRef.value) {
+            const childWidth = sliderRef.value.firstElementChild?.clientWidth as number;
+            const scrollAmount = childWidth;
     
-//             if (sliderRef.current.scrollLeft > 0) {
-//                 console.info(-scrollAmount)
-//                 sliderRef.current.scrollBy({
-//                     left: -scrollAmount - 48,
-//                     behavior: 'smooth',
-//                 });
-//             } else {
-//                 console.log("Scroll reached the beginning.");
-//             }
-//         }
-//     };
+            if (sliderRef.value.scrollLeft > 0) {
+                console.info(-scrollAmount)
+                sliderRef.value.scrollBy({
+                    left: -scrollAmount - 48,
+                    behavior: 'smooth',
+                });
+            }
+        }
+    });
 
-//     return (
-//         <section className="font-poppins flex flex-col gap-y-9" id="portfolio">
+    return (
+        <section class="font-poppins flex flex-col gap-y-9" id="portfolio">
 
-//             <section className="flex flex-wrap gap-6 items-end justify-between">
+            <section class="flex flex-wrap gap-6 items-end justify-between">
 
-//                 <article className="flex flex-col gap-y-4 md:gap-y-6">
+                <article class="flex flex-col gap-y-4 md:gap-y-6">
 
-//                     <h1 className="text-h1-small md:text-h1-medium lg:text-h1-large font-medium text-neutral-0">
-//                         Portfolio
-//                     </h1>
+                    <h1 class="text-h1-small md:text-h1-medium lg:text-h1-large font-medium text-neutral-0">
+                        Portfolio
+                    </h1>
 
-//                     <p className="text-label-medium md:text-label-large text-neutral-100 max-w-[500px]">
-//                         Explore Our Digital Creations
-//                     </p>
-//                 </article>
+                    <p class="text-label-medium md:text-label-large text-neutral-100 max-w-[500px]">
+                        Explore Our Digital Creations
+                    </p>
+                </article>
 
-//                 <section className="w-full sm:w-fit flex justify-end gap-4">
-//                     <Button
-//                         variant = "secondary"
-//                         size = "small"
-//                         onClick={previousHandler}
-//                     >
-//                         <p>Previous</p>
-//                     </Button>
+                <section class="w-full sm:w-fit flex justify-end gap-4">
+                    <Button
+                        variant = "secondary"
+                        size = "small"
+                        onClick$={previousHandler}
+                    >
+                        <p>Previous</p>
+                    </Button>
 
-//                     <Button
-//                         variant = "secondary"
-//                         size = "small"
-//                         onClick={sliderHandler}
-//                     >
-//                         <p>Next</p>
-//                     </Button>
-//                 </section>
-//             </section>
+                    <Button
+                        variant = "secondary"
+                        size = "small"
+                        onClick$={sliderHandler}
+                    >
+                        <p>Next</p>
+                    </Button>
+                </section>
+            </section>
 
-//             <section 
-//                 className="flex gap-x-12 overflow-x-scroll"
-//                 style={{ scrollbarWidth: "none" }}
-//                 ref={sliderRef}
-//             >
-//                 {/* {data && data.map(( data ) => {
-//                     return (
-//                         <Portfolio
-//                             key={data.id}
-//                             data={data}
-//                         />
-//                     )
-//                 })} */}
-//             </section>
-//         </section>
-//     );
-// }
+            <section 
+                class="flex gap-x-12 overflow-x-scroll"
+                style={{ scrollbarWidth: "none" }}
+                ref={sliderRef}
+            >
+                {data && data.value.map(( data ) => {
+                    return (
+                        <Portfolio
+                            key={data.id}
+                            data={data}
+                        />
+                    )
+                })}
+            </section>
+        </section>
+    );
+});
 
 const BookAMeetingSection = component$(() => {
     return (
@@ -210,3 +215,14 @@ const BookAMeetingSection = component$(() => {
         </section>
     );
 });
+
+const portfolio = [
+    {
+        id: 1,
+        name: "Bakau Studio Website",
+        thumbnail: "https://i.pinimg.com/736x/35/b6/e5/35b6e5ae5721ee97d018697db4f892be.jpg",
+        url: "https://narimarima.com/",
+        status: "online",
+        tags: "Web Design, Web Development",
+    }
+];

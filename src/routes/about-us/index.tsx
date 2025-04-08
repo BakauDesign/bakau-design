@@ -4,8 +4,6 @@ import { routeLoader$ } from '@builder.io/qwik-city';
 import { Header } from "~/components/ui-main/header";
 import { Footer } from "~/components/ui-main/footer";
 
-
-
 import { Workflow } from "~/components/ui-main/workflow";
 import { Faq } from "~/components/ui-main/faq";
 

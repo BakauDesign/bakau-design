@@ -367,6 +367,10 @@
   --color-custom-neutral-white-100: #F5F5F5;
   --color-custom-neutral-white-0: #FAFAFA;
 
+  --gradient-0: linear-gradient(90deg,#212121 0%,#2B2B2B 50%, #212121 100%);
+  --gradient-100: linear-gradient(90deg,#212121 0%,#333333 50%,#212121 100%);
+  --gradient-green-0: linear-gradient(270deg,#80C955 0%,#FFF 100%);
+
   --cols-faq: repeat(auto-fit,minmax(360px,1fr));
   --cols-workflow: repeat(auto-fit,minmax(420px,1fr));
   --cols-assets: repeat(auto-fill,minmax(420px,1fr));
