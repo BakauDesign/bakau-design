@@ -10,7 +10,7 @@ export const Template = component$<{data: IAsset}>(({ data }) => {
             <img
                 height={400}
                 width={400}
-                class='h-[360px] w-full bg-neutral-700 rounded-2xl object-cover'
+                class='h-[360px] w-full bg-custom-neutral-700 rounded-2xl object-cover'
                 src={data.thumbnail}
                 alt="Thumbnail"
             />
@@ -19,7 +19,7 @@ export const Template = component$<{data: IAsset}>(({ data }) => {
                 <ul
                     class={`
                         flex flex-wrap gap-3
-                        *:text-label-small *:md:text-label-medium *:lg:text-label-large text-neutral-white-200
+                        *:text-label-small *:md:text-label-medium *:lg:text-label-large text-custom-neutral-white-200
                     `}
                 >
                     { data.tags.split(",").map((tag) => {
@@ -31,7 +31,7 @@ export const Template = component$<{data: IAsset}>(({ data }) => {
                     })}
                 </ul>
 
-                <h1 class='text-h3-small md:text-h3-medium lg:text-h3-large text-neutral-0'>
+                <h1 class='text-h3-small md:text-h3-medium lg:text-h3-large text-custom-neutral-0'>
                     { data.title }
                 </h1>
 
@@ -40,7 +40,7 @@ export const Template = component$<{data: IAsset}>(({ data }) => {
             <div class='h-full w-full top-0 bottom-0 left-0 right-0 absolute flex items-center justify-center opacity-0 hover:opacity-100 cursor-fancy'>
                 <p 
                     onClick$={() => navigate(`/templates/${data.id}`)}
-                    class='p-4 aspect-square rounded-full cursor-fancy bg-custom-neutral-700 hover:bg-custom-neutral-600 flex items-center justify-center font-museomoderno text-label-small sm:text-label-medium font-medium'
+                    class='p-4 aspect-square rounded-full cursor-fancy text-custom-neutral-0 bg-custom-neutral-700 hover:bg-custom-neutral-600 flex items-center justify-center font-museomoderno text-label-small sm:text-label-medium font-medium'
                 >
                     LEARN MORE
                 </p>

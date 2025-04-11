@@ -38,7 +38,7 @@ export default component$(() => {
 			<main class="pt-[220px] w-full px-4 md:px-6 lg:px-12 flex flex-col gap-y-[150px]">
 				<section>
                     <article class="flex flex-col gap-y-8">
-                        <h1 class="text-display-small md:text-display-medium lg:text-display-large font-medium font-museomoderno">
+                        <h1 class="text-display-small md:text-display-medium lg:text-display-large font-medium font-museomoderno text-custom-neutral-0">
                             Not just aesthetic design but also <br /> <span class="bg-[linear-gradient(270deg,#6EAC49_0%,#80C955_100%)] bg-clip-text" style={{WebkitTextFillColor: "transparent"}}>solve problem</span>
                         </h1>
 
@@ -60,7 +60,7 @@ export default component$(() => {
 				<section class="font-poppins flex flex-col gap-y-9">
                     <article class="flex flex-col gap-y-4 md:gap-y-6">
 
-                        <h1 class="text-h1-small md:text-h1-medium lg:text-h1-large font-medium text-neutral-0">
+                        <h1 class="text-h1-small md:text-h1-medium lg:text-h1-large font-medium text-neutral-0 text-custom-neutral-0">
                             Our Service
                         </h1>
 
@@ -71,7 +71,7 @@ export default component$(() => {
 
                     <ul class={`
                         *:p-8 *:h-[300px] *:w-full *:max-w-[500px] *:flex *:flex-col *:gap-y-6 *:justify-between *:rounded-2xl *:bg-[linear-gradient(180deg,#1F1F1F_0%,#1A1A1A_100%)]
-                        *:text-h3-large *:font-medium
+                        *:text-h3-large *:font-medium *:text-custom-neutral-0
                         flex flex-col lg:justify-end xl:flex-wrap md:flex-row gap-9
                     `}>
                         <li>
@@ -155,11 +155,11 @@ const PortfolioSection = component$(() => {
 
                 <article class="flex flex-col gap-y-4 md:gap-y-6">
 
-                    <h1 class="text-h1-small md:text-h1-medium lg:text-h1-large font-medium text-neutral-0">
+                    <h1 class="text-h1-small md:text-h1-medium lg:text-h1-large font-medium text-custom-neutral-0">
                         Portfolio
                     </h1>
 
-                    <p class="text-label-medium md:text-label-large text-neutral-100 max-w-[500px]">
+                    <p class="text-label-medium md:text-label-large text-custom-neutral-100 max-w-[500px]">
                         Explore Our Digital Creations
                     </p>
                 </article>
@@ -219,10 +219,10 @@ const BookAMeetingSection = component$(() => {
 const portfolio = [
     {
         id: 1,
-        name: "Bakau Studio Website",
+        name: "Narima Prima Sejahtera",
         thumbnail: "https://i.pinimg.com/736x/35/b6/e5/35b6e5ae5721ee97d018697db4f892be.jpg",
         url: "https://narimarima.com/",
         status: "online",
-        tags: "Web Design, Web Development",
+        tags: "Web Design, Web Development, Company Profile",
     }
 ];

@@ -23,7 +23,7 @@ export const Faq = component$<{ data: Faq}>(({ data }) => {
             >
                 <h1
                     class={`
-                        text-label-large md:text-h3-small text-neutral-white-200 text-left
+                        text-label-large md:text-h3-small text-custom-neutral-white-200 text-left
                     `}
                 >
                     { data.title }
@@ -39,7 +39,7 @@ export const Faq = component$<{ data: Faq}>(({ data }) => {
 
             <p
                 class={`
-                    text-body-small md:text-body-medium text-neutral-white-100 pr-6 transition-all duration-300
+                    text-body-small md:text-body-medium text-custom-neutral-white-100 pr-6 transition-all duration-300
                     ${!isOpened.value ? "h-0 opacity-0" : "h-fit opacity-100"}
                 `}
             >

@@ -32,7 +32,7 @@ export const Portfolio = component$<{data: IPortfolio}>(({ data }) => {
                 <div class='h-full w-full top-0 bottom-0 left-0 right-0 absolute flex items-center justify-center opacity-0 hover:opacity-100 cursor-fancy'>
                     <Link 
                         href={data.url} 
-                        class='p-4 aspect-square rounded-full cursor-fancy bg-lime-500 flex items-center justify-center font-museomoderno text-label-small sm:text-label-medium font-medium'
+                        class='p-4 aspect-square rounded-full cursor-fancy text-custom-neutral-0 bg-lime-500 flex items-center justify-center font-museomoderno text-label-small sm:text-label-medium font-medium'
                     >
                         VISIT
                     </Link>
