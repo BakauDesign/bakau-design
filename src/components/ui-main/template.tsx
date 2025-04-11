@@ -18,7 +18,7 @@ export const Template = component$<{data: IAsset}>(({ data }) => {
             <figcaption class='flex flex-col gap-y-4'>
                 <ul
                     class={`
-                        flex flex-wrap gap-3
+                        flex flex-wrap gap-4
                         *:text-label-small *:md:text-label-medium *:lg:text-label-large text-custom-neutral-white-200
                     `}
                 >

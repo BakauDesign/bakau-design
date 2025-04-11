@@ -50,7 +50,7 @@ export default component$(() => {
                                 alt="Arrow Down"
                             />
 
-                            <p class="text-h3-small md:text-h3-medium lg:text-h3-large">
+                            <p class="text-h3-small md:text-h3-medium lg:text-h3-large text-custom-neutral-0">
                                 Scrool Down
                             </p>
                         </span>

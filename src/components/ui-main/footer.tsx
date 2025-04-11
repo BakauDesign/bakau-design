@@ -21,7 +21,7 @@ export const Footer = component$(() => {
                         alt="Logo"
                     />
 
-                    <p class='text-body-small md:text-body-medium'>Bakau Design is a digital agency based in Indonesia</p>
+                    <p class='text-body-small md:text-body-medium text-custom-neutral-100'>Bakau Design is a digital agency based in Indonesia</p>
                 </div>
 
                 <nav class={`
@@ -31,7 +31,7 @@ export const Footer = component$(() => {
                     <div>
                         <p class='text-custom-neutral-200'>Bakau Design</p>
 
-                        <ul class='*:font-normal *:text-neutral-0'>
+                        <ul class='*:font-normal *:text-custom-neutral-0'>
                             <li><Link href="/about-us">about us</Link></li>
                             <li><Link href="/#services">services</Link></li>
                             <li><Link href="/#portfolio">portfolio</Link></li>
@@ -41,7 +41,7 @@ export const Footer = component$(() => {
                     <div>
                         <p class='text-custom-neutral-200'>Social media</p>
 
-                        <ul class='*:font-normal *:text-neutral-0'>
+                        <ul class='*:font-normal *:text-custom-neutral-0'>
                             <li><Link href="https://www.instagram.com/bakau.design">instagram</Link></li>
                             <li><Link href="https://id.pinterest.com/bakaudesign/">pinterest</Link></li>
                         </ul>
@@ -50,7 +50,7 @@ export const Footer = component$(() => {
                     <div>
                         <p class='text-custom-neutral-200'>Resources</p>
 
-                        <ul class='*:font-normal *:text-neutral-0'>
+                        <ul class='*:font-normal *:text-custom-neutral-0'>
                             <li><Link href="/templates">Free UI Kit</Link></li>
                         </ul>
                     </div>

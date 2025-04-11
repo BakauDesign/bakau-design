@@ -26,7 +26,7 @@ export default component$(() => {
                     
                     <section class="flex flex-col lg:flex-row justify-between gap-16">
                         <article class="flex flex-col gap-y-8 max-w-[1000px]">
-                            <h1 class="text-h1-small md:text-h1-medium lg:text-h1-large font-medium text-neutral-0 text-custom-neutral-0">
+                            <h1 class="text-h1-small md:text-h1-medium lg:text-h1-large font-medium text-custom-neutral-0">
                                 { data.value.asset.title }
                             </h1>
 
@@ -67,7 +67,7 @@ export default component$(() => {
                                 Asset Information
                             </h1>
 
-                            <ul class="flex flex-col gap-y-4 *:flex *:items-center *:justify-between *:gap-x-6 *:font-poppins *:text-label-small *:sm:text-label-medium">
+                            <ul class="flex flex-col gap-y-4 *:flex *:items-center *:justify-between *:gap-x-6 *:font-poppins *:text-label-small *:sm:text-label-medium *:text-custom-neutral-100">
                                 <li>
                                     <p>Compatible</p>
                                     <p>{data.value.asset.asset_information.compatible}</p>
@@ -104,7 +104,7 @@ export default component$(() => {
                 { data.value && (
                     <section class="font-poppins flex flex-col gap-y-9">
                         <article class="py-4 flex items-center justify-between gap-x-4 border-b-[1.5px] border-b-neutral-600">
-                            <h1 class="text-h2-small md:text-h2-medium lg:text-h2-large font-medium text-neutral-0">
+                            <h1 class="text-h2-small md:text-h2-medium lg:text-h2-large font-medium text-custom-neutral-0">
                                 Other Alternative Assets
                             </h1>
                         </article>

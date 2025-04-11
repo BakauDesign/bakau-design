@@ -22,11 +22,11 @@ export default component$(() => {
                 <section class="font-poppins flex flex-col gap-y-9">
                        
                     <article class="flex flex-col gap-y-8 max-w-[1000px]">
-                        <h1 class="text-h1-small md:text-h1-medium lg:text-h1-large font-medium text-neutral-0">
+                        <h1 class="text-h1-small md:text-h1-medium lg:text-h1-large font-medium text-custom-neutral-0">
                             Templates
                         </h1>
 
-                        <p class="text-h3-small md:text-h3-medium lg:text-h3-large text-neutral-100">
+                        <p class="text-h3-small md:text-h3-medium lg:text-h3-large text-custom-neutral-100">
                             Looking for a fast design upgrade? Our templates are made for you. Enhance your site and do your workflow effortlessly
                         </p>
                     </article>
@@ -35,11 +35,11 @@ export default component$(() => {
                 <section class="font-poppins flex flex-col gap-y-9">
                        
                     <article class="py-4 flex items-center justify-between gap-x-4 border-b-[1.5px] border-b-neutral-600">
-                        <h1 class="text-h2-small md:text-h2-medium lg:text-h2-large font-medium text-neutral-0">
+                        <h1 class="text-h2-small md:text-h2-medium lg:text-h2-large font-medium text-custom-neutral-0">
                             All Asset
                         </h1>
 
-                        <p class="text-label-small md:text-label-medium lg:text-label-large text-neutral-0">
+                        <p class="text-label-small md:text-label-medium lg:text-label-large text-custom-neutral-0">
                             {data.value.length} Assets
                         </p>
                     </article>
