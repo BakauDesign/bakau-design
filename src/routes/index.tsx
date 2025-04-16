@@ -221,8 +221,16 @@ const portfolio = [
         id: 1,
         name: "Narima Prima Sejahtera",
         thumbnail: "https://i.pinimg.com/736x/35/b6/e5/35b6e5ae5721ee97d018697db4f892be.jpg",
-        url: "https://narimarima.com/",
+        url: "https://narimaprima.com/",
         status: "online",
         tags: "Web Design, Web Development, Company Profile",
+    },
+    {
+        id: 2,
+        name: "Vroom Coffee & Roastery",
+        thumbnail: "https://i.pinimg.com/736x/0e/fc/ea/0efcea235ecf2c6a7c97db091e2e6bff.jpg",
+        url: "https://vroom-coffee-roastery.pages.dev",
+        status: "online",
+        tags: "Web Design, Web Development",
     }
 ];
