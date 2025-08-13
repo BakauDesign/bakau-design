@@ -3,15 +3,18 @@ import { routeLoader$ } from '@builder.io/qwik-city';
 
 import { Header } from "~/components/ui-main/header";
 import { Footer } from "~/components/ui-main/footer";
-import { Template } from "~/components/ui-main/template";
-import { IAsset } from "~/interfaces";
+import { Asset } from "~/components/ui-main/asset";
+import { getAssets } from "~/services/assets";
+// import { IAsset } from "~/interfaces";
 
-export const useAssets = routeLoader$(async () => {
-    return assets;
-});
+export const useGetAssets = routeLoader$(
+	async (event) => {
+		return await getAssets({ event });
+	}
+);
 
 export default component$(() => {
-    const data = useAssets();
+    const { value: assets } = useGetAssets();
 
     return (
         <>
@@ -40,18 +43,18 @@ export default component$(() => {
                         </h1>
 
                         <p class="text-label-small md:text-label-medium lg:text-label-large text-custom-neutral-0">
-                            {data.value.length} Assets
+                            {assets.data.length} Assets
                         </p>
                     </article>
 
                     
-                    {data.value.length ? (
+                    {assets.data.length ? (
                         <section class="grid gap-x-9 gap-y-12 grid-cols-(--cols-assets)">
-                            {data.value.map((template) => {
+                            {assets.data.map((asset) => {
                                 return (
-                                    <Template
-                                        key={template.id}
-                                        data={template}
+                                    <Asset
+                                        key={asset.id}
+                                        data={asset}
                                     />
                                 )
                             })}
@@ -89,7 +92,7 @@ const BookAMeetingSection = component$(() => {
     );
 });
 
-const assets: Array<IAsset> = [
+// const assets: Array<IAsset> = [
     // {
 	// 	id: 1,
 	// 	title: "Creative Portfolio Template",
@@ -311,4 +314,4 @@ const assets: Array<IAsset> = [
 	// 	tags: "blog,minimal,template",
 	// 	purchaseLink: "https://gumroad.com/blog-template"
     // }
-];
+// ];

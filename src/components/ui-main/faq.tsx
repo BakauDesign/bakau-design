@@ -6,13 +6,13 @@ import {
 import Plus from "~/assets/icons/Plus.svg";
 import Dash from "~/assets/icons/Dash.svg";
 
-interface Faq {
+export type Faq = {
     id: number;
-    title: string;
-    answer: string;
+    judul: string;
+    jawaban: string;
 }
 
-export const Faq = component$<{ data: Faq}>(({ data }) => {
+export const Faq = component$<{ data: Faq }>(({ data: faq }) => {
     const isOpened = useSignal(false);
 
     return (
@@ -26,7 +26,7 @@ export const Faq = component$<{ data: Faq}>(({ data }) => {
                         text-label-large md:text-h3-small text-custom-neutral-white-200 text-left
                     `}
                 >
-                    { data.title }
+                    { faq.judul }
                 </h1>
 
                 <img
@@ -43,7 +43,7 @@ export const Faq = component$<{ data: Faq}>(({ data }) => {
                     ${!isOpened.value ? "h-0 opacity-0" : "h-fit opacity-100"}
                 `}
             >
-                { data.answer }
+                { faq.jawaban }
             </p>
         </article>
     );

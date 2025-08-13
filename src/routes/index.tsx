@@ -16,6 +16,8 @@ import Pallete from "~/assets/icons/Pallete.svg";
 import Code from "~/assets/icons/Code.svg";
 import { Button } from "~/components/ui-main/button";
 
+import { getPortfolios } from "~/services/portfolios";
+
 export const head: DocumentHead = {
 	title: "Bakau Design",
 	meta: [
@@ -26,9 +28,11 @@ export const head: DocumentHead = {
     ]
 };
 
-export const usePortfolio = routeLoader$(async () => {
-    return portfolio;
-});
+export const useGetPortfolios = routeLoader$(
+    async () => {
+        return getPortfolios({ is_active: true });
+    }
+);
 
 export default component$(() => {
 	return (
@@ -115,7 +119,7 @@ export default component$(() => {
 });
 
 const PortfolioSection = component$(() => {
-    const data = usePortfolio();
+    const { value: portfolios } = useGetPortfolios();
 
     const sliderRef = useSignal<Element>();
 
@@ -188,14 +192,14 @@ const PortfolioSection = component$(() => {
                 style={{ scrollbarWidth: "none" }}
                 ref={sliderRef}
             >
-                {data && data.value.map(( data ) => {
+                {portfolios.data.length ? portfolios.data.map(( data ) => {
                     return (
                         <Portfolio
                             key={data.id}
                             data={data}
                         />
                     )
-                })}
+                }): null}
             </section>
         </section>
     );
@@ -216,21 +220,21 @@ const BookAMeetingSection = component$(() => {
     );
 });
 
-const portfolio = [
-    {
-        id: 1,
-        name: "Narima Prima Sejahtera",
-        thumbnail: "https://i.pinimg.com/736x/35/b6/e5/35b6e5ae5721ee97d018697db4f892be.jpg",
-        url: "https://narimaprima.com/",
-        status: "online",
-        tags: "Web Design, Web Development, Company Profile",
-    },
-    {
-        id: 2,
-        name: "Vroom Coffee & Roastery",
-        thumbnail: "https://i.pinimg.com/736x/0e/fc/ea/0efcea235ecf2c6a7c97db091e2e6bff.jpg",
-        url: "https://vroom-coffee-roastery.pages.dev",
-        status: "online",
-        tags: "Web Design, Web Development",
-    }
-];
+// const portfolio = [
+//     {
+//         id: 1,
+//         name: "Narima Prima Sejahtera",
+//         thumbnail: "https://i.pinimg.com/736x/35/b6/e5/35b6e5ae5721ee97d018697db4f892be.jpg",
+//         url: "https://narimaprima.com/",
+//         status: "online",
+//         tags: "Web Design, Web Development, Company Profile",
+//     },
+//     {
+//         id: 2,
+//         name: "Vroom Coffee & Roastery",
+//         thumbnail: "https://i.pinimg.com/736x/0e/fc/ea/0efcea235ecf2c6a7c97db091e2e6bff.jpg",
+//         url: "https://vroom-coffee-roastery.pages.dev",
+//         status: "online",
+//         tags: "Web Design, Web Development",
+//     }
+// ];

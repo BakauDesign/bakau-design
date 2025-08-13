@@ -4,6 +4,8 @@ import { routeLoader$ } from '@builder.io/qwik-city';
 import { Header } from "~/components/ui-main/header";
 import { Footer } from "~/components/ui-main/footer";
 
+import { getFaqs } from "~/services/faqs";
+
 import { Workflow } from "~/components/ui-main/workflow";
 import { Faq } from "~/components/ui-main/faq";
 
@@ -11,9 +13,11 @@ export const useWorkflow = routeLoader$(async () => {
     return workflows;
 });
 
-export const useFaq = routeLoader$(async () => {
-    return faq;
-});
+export const useGetFaqs = routeLoader$(
+    async (event) => {
+        return await getFaqs({ event });
+    }
+);
 
 export default component$(() => {
     return (
@@ -106,7 +110,7 @@ const WorkflowSection = component$(() => {
 });
 
 const FaqSection = component$(() => {
-    const data = useFaq();
+    const { value: faqs } = useGetFaqs();
 
     return (
         <section class="font-poppins flex flex-col gap-y-9">
@@ -131,7 +135,7 @@ const FaqSection = component$(() => {
                 class="grid gap-6 grid-cols-(--cols-faq)"
                 style={{ scrollbarWidth: "none" }}
             >
-                {data.value.map(( data ) => {
+                {faqs?.data.map(( data ) => {
                     return (
                         <Faq
                             key={data.id}
@@ -160,23 +164,23 @@ const BookAMeetingSection = component$(() => {
 });
 
 
-const faq = [
-    {
-        id: 1,
-        title: "How do I get project progress notifications?",
-        answer: "We will report project progress by email every 5 pm."
-    },
-    {
-        id: 2,
-        title: "Can I get a refund after I cancel a project midway?",
-        answer: "Yes, you will get a 50% refund."
-    },
-    {
-        id: 3,
-        title: "Can I order web development or design only?",
-        answer: "Of course, you can order the service according to your needs."
-    }
-];
+// const faq = [
+//     {
+//         id: 1,
+//         title: "How do I get project progress notifications?",
+//         answer: "We will report project progress by email every 5 pm."
+//     },
+//     {
+//         id: 2,
+//         title: "Can I get a refund after I cancel a project midway?",
+//         answer: "Yes, you will get a 50% refund."
+//     },
+//     {
+//         id: 3,
+//         title: "Can I order web development or design only?",
+//         answer: "Of course, you can order the service according to your needs."
+//     }
+// ];
 
 const workflows = [
     {

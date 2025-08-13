@@ -1,37 +1,71 @@
-import { component$ } from '@builder.io/qwik';
+import { component$, isDev } from '@builder.io/qwik';
 import { Link } from '@builder.io/qwik-city';
-import { IPortfolio } from '~/interfaces';
 
-export const Portfolio = component$<{data: IPortfolio}>(({ data }) => {
+const API = `${isDev ? "http://localhost:1337" : "https://splendid-prosperity-45273ea083.strapiapp.com"}`;
+
+type Thumbnail = {
+    formats: {
+        small: {
+            height: number;
+            width: number;
+            url: string;
+        };
+        medium: {
+            height: number;
+            width: number;
+            url: string;
+        };
+        large: {
+            height: number;
+            width: number;
+            url: string;
+        };
+    };
+}
+
+export type Portfolio = {
+    id: number;
+    nama: string;
+    thumbnail: Thumbnail;
+    url: string;
+    jenis: string;
+    penanda: string | null;
+};
+
+export const Portfolio = component$<{ data: Portfolio }>(({ data: portfolio }) => {
     return (
         <article class='flex flex-col gap-y-8 min-w-[328px] md:min-w-[580px]'>
 
             <figure
                 class='h-[280px] md:h-[400px] relative rounded-xl overflow-hidden'
-            >
-                <img
-                    height={500}
-                    width={500}
-                    class="h-full w-full object-cover"
-                    src={data.thumbnail} 
-                    alt={`Thumbnail ${data.name}`}
-                />
+            >   
+                <picture>
+                    <source srcset={`${API}${portfolio.thumbnail.formats.large.url}`}  media="(min-width: 1080px)" />
+                    <source srcset={`${API}${portfolio.thumbnail.formats.medium.url}`}  media="(min-width: 728px)" />
+                    <img
+                        height={portfolio.thumbnail.formats.small.height}
+                        width={portfolio.thumbnail.formats.small.width}
+                        class="h-full w-full object-cover"
+                        src={`${API}${portfolio.thumbnail.formats.small.url}`} 
+                        alt={`Thumbnail ${portfolio.nama}`}
+                    />
+                </picture>
 
                 <div
                     class='absolute bottom-0 right-0 rounded-tl-xl bg-custom-neutral-700 py-2 px-3 flex items-center gap-x-4'
                 >
                     <span class={`
-                        h-[8px] w-[8px] block rounded-full ${data.status === "online" ? "bg-primary-400" : "bg-[#5555C9]"}
+                        h-[8px] w-[8px] block rounded-full ${portfolio.jenis === "online" ? "bg-primary-400" : "bg-[#5555C9]"}
                     `} />
 
                     <p class='text-custom-neutral-0 font-medium text-label-small sm:text-label-medium'>
-                        { data.status }
+                        { portfolio.jenis }
                     </p>
                 </div>
 
                 <div class='h-full w-full top-0 bottom-0 left-0 right-0 absolute flex items-center justify-center opacity-0 hover:opacity-100 cursor-fancy'>
                     <Link 
-                        href={data.url} 
+                        href={portfolio.url} 
                         class='p-4 aspect-square rounded-full cursor-fancy text-custom-neutral-0 bg-lime-500 flex items-center justify-center font-museomoderno text-label-small sm:text-label-medium font-medium'
                     >
                         VISIT
@@ -41,14 +75,14 @@ export const Portfolio = component$<{data: IPortfolio}>(({ data }) => {
 
             <figcaption class='flex flex-col gap-y-6 font-poppins'>
                 <h1 class='text-custom-neutral-0 text-h3-large md:text-h2-medium lg:text-h2-large text-neutral-0'>
-                    { data.name }
+                    { portfolio.nama }
                 </h1>
 
                 <ul class={`
                     flex flex-wrap gap-4
                     *:font-poppins *:text-label-small *:md:text-label-medium *:text-neutral-white-200 *:bg-custom-neutral-700 *:text-custom-neutral-white-200 *:py-2 *:px-3 *:rounded-full  
                 `}>
-                    {data.tags?.split(",").map(( tag ) => {
+                    {portfolio.penanda?.split(",").map(( tag ) => {
                         return (
                             <li key={tag}>{tag}</li>
                         )
