@@ -1,5 +1,3 @@
-import { FlowbiteProvider, FlowbiteProviderHeader } from 'flowbite-qwik';
-
 import { component$ } from '@builder.io/qwik';
 import { isDev } from '@builder.io/qwik';
 import {
@@ -29,14 +27,11 @@ export default component$(() => {
             href={`${import.meta.env.BASE_URL}manifest.json`}
           />
         )}
-        <FlowbiteProviderHeader />
         <RouterHead />
         {!isDev && <ServiceWorkerRegister />}
       </head>
       <body lang="en">
-        <FlowbiteProvider theme="blue" toastPosition="bottom-right">
-          <RouterOutlet />
-        </FlowbiteProvider>
+        <RouterOutlet />
       </body>
     </QwikCityProvider>
   );

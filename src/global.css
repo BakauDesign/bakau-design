@@ -1,9 +1,5 @@
 @import 'tailwindcss';
 
-@plugin 'flowbite/plugin';
-
-@source "../node_modules/flowbite-qwik";
-
 /**
  * WHAT IS THIS FILE?
  *
@@ -404,10 +400,6 @@ body {
   margin: 0;
   line-height: inherit;
 }
-
-@plugin 'flowbite/plugin';
-
-@source "../node_modules/flowbite-qwik";
 
 @theme {
   --animate-from-left: slideFromLeft 0.2s 1;
