@@ -1,5 +1,5 @@
 import { component$, isDev } from '@builder.io/qwik';
-import { Link } from '@builder.io/qwik-city';
+import { Link, useLocation } from '@builder.io/qwik-city';
 
 const API = `${isDev ? "http://localhost:1337" : "https://splendid-prosperity-45273ea083.strapiapp.com"}`;
 
@@ -40,6 +40,10 @@ type Format = {
 }
 
 export const Asset = component$<{ data: Asset }>(({ data: asset }) => {
+    const location = useLocation();
+
+    const langInUrl = location.url.searchParams.get('locale');
+
     return (
         <figure class='font-poppins flex flex-col gap-y-8 relative'>
             <picture class="h-[360px] lg:h-[400px] overflow-hidden rounded-2xl *:h-full *:w-full *:object-cover">
@@ -77,7 +81,7 @@ export const Asset = component$<{ data: Asset }>(({ data: asset }) => {
 
             <div class='h-full w-full top-0 bottom-0 left-0 right-0 absolute flex items-center justify-center opacity-0 hover:opacity-100 cursor-fancy'>
                 <Link 
-                    href={`/templates/${asset.slug}`}
+                    href={`/templates/${asset.slug}/?locale=${langInUrl}`}
                     class='p-4 aspect-square rounded-full cursor-fancy text-custom-neutral-0 bg-custom-neutral-700 hover:bg-custom-neutral-600 flex items-center justify-center font-museomoderno text-label-small sm:text-label-medium font-medium'
                 >
                     LEARN MORE

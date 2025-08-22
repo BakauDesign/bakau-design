@@ -1,5 +1,5 @@
 import { isDev } from "@builder.io/qwik";
-import { RequestEventLoader } from "@builder.io/qwik-city";
+import type { RequestEventLoader } from "@builder.io/qwik-city";
 import type { Asset } from "~/components/ui-main/asset";
 
 const API = `${isDev ? "http://localhost:1337/api/" : "https://splendid-prosperity-45273ea083.strapiapp.com/api/"}`;
@@ -46,8 +46,6 @@ export async function getAssets({
 
         const response: QueryResponse = await request.json();
 
-        console.info(response)
-
         return {
             ...response,
             success: true,
@@ -91,8 +89,6 @@ export async function getAlternativeAssets({
         });
 
         const response: QueryResponse = await request.json();
-
-        console.info(response)
 
         return {
             ...response,
@@ -142,8 +138,6 @@ export async function getAssetsDetail({
         });
 
         const response: QueryResponse = await request.json();
-
-        console.info(response.data[0].galeri)
 
         return {
             ...response,

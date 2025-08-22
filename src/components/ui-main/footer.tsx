@@ -5,8 +5,9 @@ import {
 import { Link } from '@builder.io/qwik-city';
 
 import Logo from "~/assets/Logo.png";
+import type { Footer as FooterContent } from '~/services/components';
 
-export const Footer = component$(() => {
+export const Footer = component$(({ konten }: { konten?: FooterContent | null }) => {
     return (
         <footer class={`
             w-screen pt-16 bg-custom-neutral-700 flex flex-col gap-y-12 font-poppins
@@ -21,24 +22,27 @@ export const Footer = component$(() => {
                         alt="Logo"
                     />
 
-                    <p class='text-body-small md:text-body-medium text-custom-neutral-100'>Bakau Design is a digital agency based in Indonesia</p>
+                    <p class='text-body-small md:text-body-medium text-custom-neutral-100' dangerouslySetInnerHTML={konten?.deskripsi || "Footer description"} />
                 </div>
 
                 <nav class={`
                     *:flex *:flex-col *:gap-y-5 *:font-medium *:*:flex *:*:flex-col *:*:gap-y-3
                     flex flex-wrap gap-12 text-label-small md:text-label-medium justify-between lg:justify-center
                 `}>
-                    <div>
-                        <p class='text-custom-neutral-200'>Bakau Design</p>
+                    {konten?.menu ? konten.menu.map((footerMenu) => (
+                        <div key={footerMenu.id}>
+                            <p class='text-custom-neutral-200'>{ footerMenu.nama }</p>
 
-                        <ul class='*:font-normal *:text-custom-neutral-0'>
-                            <li><Link href="/about-us">about us</Link></li>
-                            <li><Link href="/#services">services</Link></li>
-                            <li><Link href="/#portfolio">portfolio</Link></li>
-                        </ul>
-                    </div>
+                            <ul class='*:font-normal *:text-custom-neutral-0'>
+                                {footerMenu.sub_menu.map((subMenu) => (
+                                    <li key={subMenu.id}><Link href={subMenu.href}>{ subMenu.label }</Link></li>
+                                ))}
+                            </ul>
+                        </div>
+                    )) : null}
                     
-                    <div>
+                    
+                    {/* <div>
                         <p class='text-custom-neutral-200'>Social media</p>
 
                         <ul class='*:font-normal *:text-custom-neutral-0'>
@@ -53,7 +57,7 @@ export const Footer = component$(() => {
                         <ul class='*:font-normal *:text-custom-neutral-0'>
                             <li><Link href="/templates">Free UI Kit</Link></li>
                         </ul>
-                    </div>
+                    </div> */}
                 </nav>
             </div>
 

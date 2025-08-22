@@ -3,15 +3,22 @@ import {
     useSignal
 } from '@builder.io/qwik';
 
-import { Link } from '@builder.io/qwik-city';
+import { Link, useLocation } from '@builder.io/qwik-city';
 
 import Logo from "~/assets/Logo.png";
 import HamburgerMenu from "~/assets/icons/Hamburger Menu.svg";
 import Close from "~/assets/icons/Close.svg";
-import { Button } from './button';
 
-export const Header = component$(() => {
+import { Button } from './button';
+import { ToggleLanguage } from './toggle-language';
+
+import type { Header as HeaderContent } from '~/services/components';
+
+export const Header = component$(({ konten }: { konten?: HeaderContent | null }) => {
     const isOpen = useSignal(false);
+    const location = useLocation();
+
+    const langInUrl = location.url.searchParams.get('locale');
 
     return (
         <header
@@ -31,24 +38,56 @@ export const Header = component$(() => {
             <nav class={`
                 hidden lg:flex gap-x-12 *:text-neutral-0 items-center *:text-custom-neutral-100
             `}>
-                <Link class='hover:text-custom-neutral-0' href="/">home</Link>
-                <Link class='hover:text-custom-neutral-0' href="/#portfolio">portfolio</Link>
+                {konten?.menu ? konten.menu.map((navMenu) => {
+                    const pathsWithLocale = ['/', '/about-us', '/templates', ''];
+
+                    const [path, fragment] = navMenu.href.split('#');
+
+                    const shouldAddLocale = pathsWithLocale.includes(path);
+
+                    let hrefWithLocale = path;
+                    if (shouldAddLocale) {
+                        const url = new URL(path, location.url.origin);
+                        url.searchParams.set('locale', langInUrl || 'id');
+                        hrefWithLocale = url.pathname + url.search;
+                    }
+
+                    if (fragment) {
+                        hrefWithLocale += `#${fragment}`;
+                    }
+
+                    return (
+                        <Link key={navMenu.id} class='hover:text-custom-neutral-0' href={hrefWithLocale}>{ navMenu.label }</Link>
+                    );
+                }) : null}
+                {/* <Link class='hover:text-custom-neutral-0' href="/#portfolio">portfolio</Link>
                 <Link class='hover:text-custom-neutral-0' href="/about-us">about us</Link>
                 <Link href="/templates" class='flex gap-x-1.5 items-center text-custom-neutral-0'>
                     <p>templates</p>
                     <p class='py-[2px] px-2 bg-[#D81313] rounded-full flex items-center gap-x-1.5'>Free</p>
-                </Link>
+                </Link> */}
 
-                <div>
-                    <Button
-                        variant = "primary"
-                        size = "small"
-                        onClick$={() => window.open("https://calendly.com/hi-bakaudesign")}
-                    >
-                        <p>Book a Meeting</p>
-                    </Button>
-                </div>
+                {konten?.cta ? (
+                    <div>
+                        <Button
+                            variant = "primary"
+                            size = "small"
+                            onClick$={() => window.open(konten.cta.link)}
+                        >
+                            <p>{ konten.cta.judul }</p>
+                        </Button>
+                    </div>
+                ) : null}
             </nav>
+
+            {/* <section class="flex items-center gap-3">
+                <UKFlag />
+                <Toggle 
+                    onClick$={toggleLanguage}
+                    value={language.value === 'inggris'}
+                />
+            </section> */}
+            <ToggleLanguage />
 
             <img
                 height={24}

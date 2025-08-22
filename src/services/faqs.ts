@@ -1,5 +1,5 @@
 import { isDev } from "@builder.io/qwik";
-import { RequestEventLoader } from "@builder.io/qwik-city";
+import type { RequestEventLoader } from "@builder.io/qwik-city";
 import type { Faq } from "~/components/ui-main/faq";
 
 const API = `${isDev ? "http://localhost:1337/api/" : "https://splendid-prosperity-45273ea083.strapiapp.com/api/"}`;
@@ -22,12 +22,13 @@ type QueryResponse = {
 }
 
 export async function getFaqs({
-    is_active = true
+    is_active = true,
+    event: { query }
 }: FaqsQuery) {
     try {
         const is_active_filter = `${is_active ? `&filters[is_active][$eq]=${is_active}` : ``}`;
 
-        const request = await fetch(`${API}faqs?fields[0]=judul&fields[1]=jawaban${is_active_filter}`, {
+        const request = await fetch(`${API}faqs?fields[0]=judul&fields[1]=jawaban${is_active_filter}&locale=${query.get('locale') || "id"}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

@@ -5,7 +5,19 @@ import { Header } from "~/components/ui-main/header";
 import { Footer } from "~/components/ui-main/footer";
 import { Asset } from "~/components/ui-main/asset";
 import { getAssets } from "~/services/assets";
+import { type Cta, getTemplatepages } from "~/services/pages";
+import { getFooter, getHeader } from "~/services/components";
 // import { IAsset } from "~/interfaces";
+
+export const useGetContent = routeLoader$(
+	async (event) => {
+		const templatePages = await getTemplatepages(event);
+		const header = await getHeader(event);
+		const footer = await getFooter(event);
+
+		return { header, templatePages, footer };
+	}
+);
 
 export const useGetAssets = routeLoader$(
 	async (event) => {
@@ -16,9 +28,17 @@ export const useGetAssets = routeLoader$(
 export default component$(() => {
     const { value: assets } = useGetAssets();
 
+	const { value: konten } = useGetContent();
+	
+	const { templatePages, header, footer } = konten;
+	
+	const hero = templatePages.data?.hero;
+	const daftar_template = templatePages.data?.daftar_template;
+	const cta = templatePages.data?.cta;
+
     return (
         <>
-            <Header />
+            <Header konten={header.data} />
 
             <main class="pt-[220px] w-full px-4 md:px-6 lg:px-12 flex flex-col gap-y-[150px]">
     
@@ -26,11 +46,11 @@ export default component$(() => {
                        
                     <article class="flex flex-col gap-y-8 max-w-[1000px]">
                         <h1 class="text-h1-small md:text-h1-medium lg:text-h1-large font-medium text-custom-neutral-0">
-                            Templates
+                            { hero?.judul || "Your Headline" }
                         </h1>
 
                         <p class="text-h3-small md:text-h3-medium lg:text-h3-large text-custom-neutral-100">
-                            Looking for a fast design upgrade? Our templates are made for you. Enhance your site and do your workflow effortlessly
+                            { hero?.judul_pendukung || "Your Supporting Headline" }
                         </p>
                     </article>
                 </section>
@@ -39,11 +59,11 @@ export default component$(() => {
                        
                     <article class="py-4 flex items-center justify-between gap-x-4 border-b-[1.5px] border-b-neutral-600">
                         <h1 class="text-h2-small md:text-h2-medium lg:text-h2-large font-medium text-custom-neutral-0">
-                            All Asset
+                            { daftar_template?.judul || "Your Headline" }
                         </h1>
 
                         <p class="text-label-small md:text-label-medium lg:text-label-large text-custom-neutral-0">
-                            {assets.data.length} Assets
+                            {assets.data.length} { daftar_template?.judul_pendukung || "Your Supporting Headline" }
                         </p>
                     </article>
 
@@ -68,26 +88,26 @@ export default component$(() => {
                     )}
                 </section>
 
-                <BookAMeetingSection />
+                <BookAMeetingSection konten={cta} />
     
             </main>
 
-            <Footer />
+            <Footer konten={footer.data} />
         </>
     );
 });
 
-const BookAMeetingSection = component$(() => {
+const BookAMeetingSection = component$(({ konten }: { konten?: Cta; }) => {
     return (
         <section class="h-[380px] flex items-center justify-center">
-            <a
-                href="https://calendly.com/hi-bakaudesign"
+			<a
+                href={konten?.link || ""}
+                target="_blank"
                 rel="noopener noreferrer"
                 class="text-h1-small md:text-h1-medium lg:text-h1-large bg-neutral-100 hover:bg-[radial-gradient(50%_50%_at_50%_50%,#CCC_0%,#FFF_50%,#999_100%)] font-museomoderno font-medium bg-clip-text"
                 style={{ WebkitTextFillColor: "transparent" }}
-            >
-                Book a Meeting
-            </a>
+                dangerouslySetInnerHTML={konten?.judul || "Your CTA"}
+            />
         </section>
     );
 });

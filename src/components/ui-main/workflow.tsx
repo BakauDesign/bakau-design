@@ -2,12 +2,15 @@ import {
     component$
 } from '@builder.io/qwik';
 
-interface Workflow {
+export type Workflow = {
     id: number;
-    number: string;
-    name: string;
-    description: string;
-    tags: Array<string>;
+    nomor: string;
+    nama: string;
+    deskripsi: string;
+    penanda: Array<{
+        id: number;
+        label: string;
+    }>;
 }
 
 export const Workflow = component$<{ data: Workflow }>(({ data }) => {
@@ -18,16 +21,16 @@ export const Workflow = component$<{ data: Workflow }>(({ data }) => {
                 
                 <section class='flex flex-col gap-y-4'>
                     <h1 class='text-h2-medium md:text-h2-large text-custom-neutral-0'>
-                        { data.number }
+                        0{ data.nomor }
                     </h1>
 
                     <h2 class='text-h3-medium md:text-h3-large text-custom-neutral-white-0'>
-                        { data.name }
+                        { data.nama }
                     </h2>
                 </section>
 
                 <p class='text-body-small md:text-body-medium text-custom-neutral-100'>
-                    { data.description }
+                    { data.deskripsi }
                 </p>
             </section>
 
@@ -35,9 +38,9 @@ export const Workflow = component$<{ data: Workflow }>(({ data }) => {
                 flex flex-wrap gap-4
                 *:px-4 *:py-1.5 *:bg-custom-neutral-700 *:rounded-full *:text-label-small *:md:text-label-medium *:text-custom-neutral-100
             `}>
-                { data.tags.map(( tag ) => {
+                { data.penanda.map(( tag ) => {
                     return (
-                        <li key={tag}>{tag}</li>
+                        <li key={tag.id}>{tag.label}</li>
                     )
                 })}
             </ul>

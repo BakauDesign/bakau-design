@@ -9,9 +9,27 @@ import { getFaqs } from "~/services/faqs";
 import { Workflow } from "~/components/ui-main/workflow";
 import { Faq } from "~/components/ui-main/faq";
 
-export const useWorkflow = routeLoader$(async () => {
-    return workflows;
-});
+import {
+    getAboutUspages,
+    type Section
+} from "~/services/pages";
+
+import type {
+    Cta, 
+    WorkflowSection as WorkflowSectionType
+} from "~/services/pages";
+
+import { getHeader, getFooter } from "~/services/components";
+
+export const useGetContent = routeLoader$(
+    async (event) => {
+        const aboutuspage = await getAboutUspages(event);
+        const header = await getHeader(event);
+        const footer = await getFooter(event);
+
+        return { header, aboutuspage, footer };
+    }
+);
 
 export const useGetFaqs = routeLoader$(
     async (event) => {
@@ -20,20 +38,28 @@ export const useGetFaqs = routeLoader$(
 );
 
 export default component$(() => {
+    const { value: konten } = useGetContent();
+    const { aboutuspage } = konten;
+
+    const tentang_kami = aboutuspage.data?.tentang_kami;
+    const alur_kerja_kami = aboutuspage.data?.alur_kerja_kami;
+    const faq = aboutuspage.data?.faq;
+    const cta = aboutuspage.data?.cta;
+
     return (
         <>
-            <Header />
+            <Header konten={konten.header.data} />
 
             <main class="pt-[220px] w-full px-4 md:px-6 lg:px-12 flex flex-col gap-y-[150px]">
 
                 <section class="font-poppins flex flex-col gap-y-9">
                     <h1 class="text-h1-small md:text-h1-medium lg:text-h1-large font-medium text-custom-neutral-0">
-                        About us
+                        { tentang_kami?.konten.judul || "Your Headline" }
                     </h1>
 
                     <article class="flex flex-col gap-y-8 max-w-[1000px]">
                         <p class="text-h3-small md:text-h3-medium lg:text-h3-large text-custom-neutral-100">
-                            Bakau Design is a digital agency based in Indonesia, we focused on ui ux design and web development.
+                            { tentang_kami?.konten.judul_pendukung || "Your Supporting Headline" }
                         </p>
 
                             <span class="block h-[1.5px] w-full bg-neutral-600" />
@@ -42,74 +68,70 @@ export default component$(() => {
                                 <li class="flex flex-col gap-y-2">
 
                                     <h1 class="text-h3-small md:text-h3-medium lg:text-h3-large font-medium text-custom-neutral-0">
-                                        Vision
+                                        { tentang_kami?.visi_dan_misi.label_visi || "Your Vision Label" }
                                     </h1>
 
                                     <p class="text-body-small md:text-body-medium lg:text-body-large text-custom-neutral-100">
-                                        We have a vision to become a design agency that not only produce aesthetic designs but also solve clients problems through effective design solutions.
+                                        { tentang_kami?.visi_dan_misi.konten_visi || "Your Vision Content" }
                                     </p>
                                 </li>
 
                                 <li class="flex flex-col gap-y-2">
 
                                     <h1 class="text-h3-small md:text-h3-medium lg:text-h3-large text-custom-neutral-0">
-                                        Mission
+                                        { tentang_kami?.visi_dan_misi.label_misi || "Your Mission Label" }
                                     </h1>
 
                                     <p class="text-body-small md:text-body-medium lg:text-body-large text-custom-neutral-100">
-                                        And our mission is work closely with clients to deeply understand their needs, evaluated various design solutions, and create designs that not only aesthetic but also make a real impact.
+                                        { tentang_kami?.visi_dan_misi.konten_misi || "Your Mission Content" }
                                     </p>
                                 </li>
                             </ul>
                         </article>
                 </section>
 
-                <WorkflowSection />
+                <WorkflowSection alur_kerja_kami={alur_kerja_kami} />
 
-                <FaqSection />
+                <FaqSection konten={faq} />
 
-                <BookAMeetingSection />
+                <BookAMeetingSection konten={cta} />
 
             </main>
 
-            <Footer />
+            <Footer konten={konten.footer.data} />
         </>
     );
 });
 
 
-const WorkflowSection = component$(() => {
-    const data = useWorkflow();
-
+const WorkflowSection = component$(({ alur_kerja_kami }: { alur_kerja_kami?: WorkflowSectionType; }) => {
     return (
         <section class="font-poppins flex flex-col gap-y-9">
             <article class="flex flex-col gap-y-4 md:gap-y-6">
 
                 <h1 class="text-h1-small md:text-h1-medium lg:text-h1-large font-medium text-custom-neutral-0">
-                    Workflow
+                    { alur_kerja_kami?.konten.judul || "Your Headline" }
                 </h1>
 
                 <p class="text-h3-small md:text-h3-medium lg:text-h3-large text-custom-neutral-100 max-w-[500px]">
-                    Process Of Working With Us
+                    { alur_kerja_kami?.konten.judul_pendukung || "Your Supporting Headline" }
                 </p>
             </article>
 
             <section class="grid grid-cols-(--cols-workflow) gap-8">
-                {data.value.map(( workflow ) => {
-                    return (
-                        <Workflow
-                            key={workflow.id}
-                            data={workflow}
-                        />
-                    )
-                })}
+                {alur_kerja_kami?.daftar_alur_kerja ? alur_kerja_kami.daftar_alur_kerja.map(( alurKerja ) => 
+                    <Workflow
+                        key={alurKerja.id}
+                        data={alurKerja}
+                    />
+                ) : null}
             </section>
 
         </section>
     );
 });
 
-const FaqSection = component$(() => {
+const FaqSection = component$(({ konten }: { konten?: Section }) => {
     const { value: faqs } = useGetFaqs();
 
     return (
@@ -120,11 +142,11 @@ const FaqSection = component$(() => {
                 <article class="flex flex-col gap-y-4 md:gap-y-6">
 
                     <h1 class="text-h1-small md:text-h1-medium lg:text-h1-large font-medium text-custom-neutral-0">
-                        Frequently Asked Questions
+                        { konten?.judul || "Your Headline" }
                     </h1>
 
                     <p class="text-label-medium md:text-label-large text-custom-neutral-100 max-w-[500px]">
-                        Find Answers Here! We're Here to Help You Learn More About Our Services.
+                        { konten?.judul_pendukung || "Your Supporting Headline" }
                     </p>
                 </article>
 
@@ -135,7 +157,7 @@ const FaqSection = component$(() => {
                 class="grid gap-6 grid-cols-(--cols-faq)"
                 style={{ scrollbarWidth: "none" }}
             >
-                {faqs?.data.map(( data ) => {
+                {faqs.data.map(( data ) => {
                     return (
                         <Faq
                             key={data.id}
@@ -148,17 +170,16 @@ const FaqSection = component$(() => {
     );
 });
 
-const BookAMeetingSection = component$(() => {
+const BookAMeetingSection = component$(({ konten }: { konten?: Cta; }) => {
     return (
         <section class="h-[380px] flex items-center justify-center">
             <a
-                href="https://calendly.com/hi-bakaudesign"
+                href={konten?.link || ""}
                 rel="noopener noreferrer"
                 class="text-h1-small md:text-h1-medium lg:text-h1-large bg-neutral-100 hover:bg-[radial-gradient(50%_50%_at_50%_50%,#CCC_0%,#FFF_50%,#999_100%)] font-museomoderno font-medium bg-clip-text"
                 style={{ WebkitTextFillColor: "transparent" }}
-            >
-                Book a Meeting
-            </a>
+                dangerouslySetInnerHTML={konten?.judul || "Your CTA"}
+            />
         </section>
     );
 });
@@ -181,34 +202,3 @@ const BookAMeetingSection = component$(() => {
 //         answer: "Of course, you can order the service according to your needs."
 //     }
 // ];
-
-const workflows = [
-    {
-        id: 1,
-        number: "01",
-        name: "Definition and Planning",
-        description: "During this initial phase, we need to understand client's requirements; define goals, roles, responsibilities; and determine project scope.",
-        tags: ["Engage With the Client", "Set Project Milestones"]
-    },
-    {
-        id: 2,
-        number: "02",
-        name: "Creation and Development",
-        description: "Once the project scope is defined, it is time to enter the phase of creating and developing ideas that will turn into the final result.",
-        tags: ["Research", "Brainstorm", "Develop the Concept", "Design"]
-    },
-    {
-        id: 3,
-        number: "03",
-        name: "Review and Approval",
-        description: "When the creative work is complete and ready to go through client review cycles to guarantee alignment. The creative team will  make any adjustments to refine the final product.",
-        tags: ["Go Through Revision Cycles", "Develop Final Assets"]
-    },
-    {
-        id: 4,
-        number: "04",
-        name: "Launch and Evaluation",
-        description: "Launching the product and measuring its success using the parameters set during the definition and planning phase.",
-        tags: ["Launch", "Evaluate the Project"]
-    }
-];

@@ -1,8 +1,9 @@
 import { 
     component$,
     useSignal,
-    QRL,
-    $
+    type QRL,
+    $,
+    isDev
 } from "@builder.io/qwik";
 import { routeLoader$ } from '@builder.io/qwik-city';
 import type { DocumentHead } from "@builder.io/qwik-city";
@@ -12,11 +13,14 @@ import { Footer } from "~/components/ui-main/footer";
 import { Portfolio } from "~/components/ui-main/portfolio";
 
 import ArrowDown from "~/assets/icons/arrow-down.svg";
-import Pallete from "~/assets/icons/Pallete.svg";
-import Code from "~/assets/icons/Code.svg";
 import { Button } from "~/components/ui-main/button";
 
+import { getHomepages } from "~/services/pages";
+import type { Cta, Section } from "~/services/pages";
 import { getPortfolios } from "~/services/portfolios";
+import { getHeader, getFooter } from "~/services/components";
+
+const API = `${isDev ? "http://localhost:1337" : ""}`;
 
 export const head: DocumentHead = {
 	title: "Bakau Design",
@@ -28,6 +32,16 @@ export const head: DocumentHead = {
     ]
 };
 
+export const useGetContent = routeLoader$(
+    async (event) => {
+        const homepages = await getHomepages(event);
+        const header = await getHeader(event);
+        const footer = await getFooter(event);
+
+        return { header, homepages, footer };
+    }
+);
+
 export const useGetPortfolios = routeLoader$(
     async () => {
         return getPortfolios({ is_active: true });
@@ -35,16 +49,26 @@ export const useGetPortfolios = routeLoader$(
 );
 
 export default component$(() => {
+    const { value: konten } = useGetContent();
+
+    const { homepages } = konten;
+
+    const hero = homepages.data?.hero;
+    const layanan_kami = homepages.data?.layanan_kami;
+    const portofolio = homepages.data?.portofolio;
+    const cta = homepages.data?.cta;
+
 	return (
 		<>
-			<Header />
+			<Header konten={konten.header.data} />
 
 			<main class="pt-[220px] w-full px-4 md:px-6 lg:px-12 flex flex-col gap-y-[150px]">
 				<section>
                     <article class="flex flex-col gap-y-8">
-                        <h1 class="text-display-small md:text-display-medium lg:text-display-large font-medium font-museomoderno text-custom-neutral-0">
-                            Not just aesthetic design but also <br /> <span class="bg-[linear-gradient(270deg,#6EAC49_0%,#80C955_100%)] bg-clip-text" style={{WebkitTextFillColor: "transparent"}}>solve problem</span>
-                        </h1>
+                        <h1
+                            class="text-display-small md:text-display-medium lg:text-display-large font-medium font-museomoderno text-custom-neutral-0"
+                            dangerouslySetInnerHTML={hero?.judul || "Your headline"}
+                        />
 
                         <span class="flex justify-end items-center gap-x-4 animate-bounce font-poppins">
                             <img 
@@ -64,61 +88,59 @@ export default component$(() => {
 				<section class="font-poppins flex flex-col gap-y-9">
                     <article class="flex flex-col gap-y-4 md:gap-y-6">
 
-                        <h1 class="text-h1-small md:text-h1-medium lg:text-h1-large font-medium text-neutral-0 text-custom-neutral-0">
-                            Our Service
-                        </h1>
+                        <h1 
+                            class="text-h1-small md:text-h1-medium lg:text-h1-large font-medium text-neutral-0 text-custom-neutral-0"
+                            dangerouslySetInnerHTML={layanan_kami?.konten.judul || "Your headline"}
+                        />
 
-                        <p class="text-label-medium md:text-label-large text-neutral-100 max-w-[500px]">
-                            We provide aesthetic design creation and smooth development.
-                        </p>
+                        <p
+                            class="text-label-medium md:text-label-large text-neutral-100 max-w-[500px]"
+                            dangerouslySetInnerHTML={layanan_kami?.konten.judul_pendukung || "Your supporting headline"}
+                        />
                     </article>
 
-                    <ul class={`
-                        *:p-8 *:h-[300px] *:w-full *:max-w-[500px] *:flex *:flex-col *:gap-y-6 *:justify-between *:rounded-2xl *:bg-[linear-gradient(180deg,#1F1F1F_0%,#1A1A1A_100%)]
-                        *:text-h3-large *:font-medium *:text-custom-neutral-0
-                        flex flex-col lg:justify-end xl:flex-wrap md:flex-row gap-9
-                    `}>
-                        <li>
-                            <p>
-                                Design User Interface and experience
-                            </p>
+                    {layanan_kami?.daftar_layanan ? (
+                        <ul class={`
+                            *:p-8 *:h-[300px] *:w-full *:max-w-[500px] *:flex *:flex-col *:gap-y-6 *:justify-between *:rounded-2xl *:bg-[linear-gradient(180deg,#1F1F1F_0%,#1A1A1A_100%)]
+                            flex flex-col lg:justify-end xl:flex-wrap md:flex-row gap-9
+                        `}>
+                            {layanan_kami.daftar_layanan.map((layanan) => (
+                                <li key={layanan.id}>
+                                    <article class="flex flex-col gap-y-4">
+                                        <p class="text-h3-large font-medium text-custom-neutral-0">
+                                            { layanan.nama }
+                                        </p>
 
-                            <img
-                                height={100}
-                                width={100}
-                                class="h-[100px] w-[100px] self-end"
-                                src={Pallete}
-                                alt="Pallete svg" 
-                            />
-                        </li>
+                                        <p class="text-body-small sm:text-body-medium text-custom-neutral-100">
+                                            { layanan.deskripsi }
+                                        </p>
+                                    </article>
 
-                        <li>
-                            <p>
-                                Design to Web Development
-                            </p>
-
-                            <img
-                                height={100}
-                                width={100}
-                                class="h-[100px] w-[100px] self-end"
-                                src={Code}
-                                alt="Code svg" 
-                            />
-                        </li>
-                    </ul>
+                                    <picture class="h-[100px] w-[100px] self-end">
+                                        <source srcset={`${API}${layanan.cover.url || ""}`}  media="(min-width: 1080px)" />
+                                        <source srcset={`${API}${layanan.cover.url || ""}`}  media="(min-width: 728px)" />
+                                        <img
+                                            src={`${API}${layanan.cover.url || ""}`} 
+                                            alt={`Thumbnail ${layanan.nama}`}
+                                        />
+                                    </picture>
+                                </li>
+                            ))}
+                        </ul>
+                    ) : null}
                 </section>
 
-				<PortfolioSection />
+				<PortfolioSection konten={portofolio}  />
 
-                <BookAMeetingSection />
+                <BookAMeetingSection konten={cta} />
 			</main>
 
-			<Footer />
+			<Footer konten={konten.footer.data} />
 		</>
 	);
 });
 
-const PortfolioSection = component$(() => {
+const PortfolioSection = component$(({ konten }: { konten?: Section; }) => {
     const { value: portfolios } = useGetPortfolios();
 
     const sliderRef = useSignal<Element>();
@@ -143,7 +165,6 @@ const PortfolioSection = component$(() => {
             const scrollAmount = childWidth;
     
             if (sliderRef.value.scrollLeft > 0) {
-                console.info(-scrollAmount)
                 sliderRef.value.scrollBy({
                     left: -scrollAmount - 48,
                     behavior: 'smooth',
@@ -153,19 +174,21 @@ const PortfolioSection = component$(() => {
     });
 
     return (
-        <section class="font-poppins flex flex-col gap-y-9" id="portfolio">
+        <section class="font-poppins flex flex-col gap-y-9" id={`portfolio`}>
 
             <section class="flex flex-wrap gap-6 items-end justify-between">
 
                 <article class="flex flex-col gap-y-4 md:gap-y-6">
 
-                    <h1 class="text-h1-small md:text-h1-medium lg:text-h1-large font-medium text-custom-neutral-0">
-                        Portfolio
-                    </h1>
+                    <h1
+                        class="text-h1-small md:text-h1-medium lg:text-h1-large font-medium text-custom-neutral-0"
+                        dangerouslySetInnerHTML={konten?.judul || "Your headline"}
+                    />
 
-                    <p class="text-label-medium md:text-label-large text-custom-neutral-100 max-w-[500px]">
-                        Explore Our Digital Creations
-                    </p>
+                    <p
+                        class="text-label-medium md:text-label-large text-custom-neutral-100 max-w-[500px]"
+                        dangerouslySetInnerHTML={konten?.judul_pendukung || "Your supporting headline"}
+                    />
                 </article>
 
                 <section class="w-full sm:w-fit flex justify-end gap-4">
@@ -205,17 +228,17 @@ const PortfolioSection = component$(() => {
     );
 });
 
-const BookAMeetingSection = component$(() => {
+const BookAMeetingSection = component$(({ konten }: { konten?: Cta; }) => {
     return (
         <section class="h-[380px] flex items-center justify-center">
             <a
-                href="https://calendly.com/hi-bakaudesign"
+                href={konten?.link || ""}
+                target="_blank"
                 rel="noopener noreferrer"
                 class="text-h1-small md:text-h1-medium lg:text-h1-large bg-neutral-100 hover:bg-[radial-gradient(50%_50%_at_50%_50%,#CCC_0%,#FFF_50%,#999_100%)] font-museomoderno font-medium bg-clip-text"
                 style={{ WebkitTextFillColor: "transparent" }}
-            >
-                Book a Meeting
-            </a>
+                dangerouslySetInnerHTML={konten?.judul || "Your CTA"}
+            />
         </section>
     );
 });
