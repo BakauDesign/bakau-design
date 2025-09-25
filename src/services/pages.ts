@@ -127,6 +127,43 @@ export async function getAboutUspages(
     }
 }
 
+
+export async function getPortfoliopages(
+    { query }: RequestEventLoader<QwikCityPlatform>
+) {
+    try {
+        const request = await fetch(`${API}halaman-portofolio?populate=all&locale=${query.get('locale') || "id"}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        const response: {
+            data: {
+                hero: Section;
+                cta: Cta;
+            }
+            meta: Meta;
+        } = await request.json();
+
+        return {
+            ...response,
+            success: true,
+            message: "Success fetching portofolio page"
+        };
+    } catch (e) {
+        if (isDev) {
+            console.info(e);
+        }
+        return {
+            success: false,
+            message: "Error fetching portofolio page",
+            data: null
+        };
+    }
+}
+
 export async function getTemplatepages(
     { query }: RequestEventLoader<QwikCityPlatform>
 ) {

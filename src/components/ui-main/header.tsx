@@ -39,7 +39,7 @@ export const Header = component$(({ konten }: { konten?: HeaderContent | null })
                 hidden lg:flex gap-x-12 *:text-neutral-0 items-center *:text-custom-neutral-100
             `}>
                 {konten?.menu ? konten.menu.map((navMenu) => {
-                    const pathsWithLocale = ['/', '/about-us', '/templates', ''];
+                    const pathsWithLocale = ['/', '/portfolio', '/about-us', '/templates', ''];
 
                     const [path, fragment] = navMenu.href.split('#');
 

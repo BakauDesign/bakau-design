@@ -5,6 +5,8 @@ const API = `${isDev ? "http://localhost:1337/api/" : "https://splendid-prosperi
 
 type PortfoliosQuery = {
     is_active?: boolean;
+    is_highlighted?: boolean;
+    ordered?: boolean;
 }
 
 type QueryResponse = {
@@ -20,13 +22,17 @@ type QueryResponse = {
 }
 
 export async function getPortfolios({
-    is_active = true
+    is_active = true,
+    is_highlighted = false,
+    ordered
 }: PortfoliosQuery) {
     try {
-        const fields = 'populate=thumbnail&fields[0]=id&fields[1]=nama&fields[2]=jenis&fields[3]=url&fields[4]=penanda';
+        const fields = 'populate=thumbnail&fields[0]=id&fields[1]=nama&fields[2]=jenis&fields[3]=url&fields[4]=penanda&fields[5]=nama_highlighted';
         const is_active_filter = `${is_active ? `&filters[is_active][$eq]=${is_active}` : ``}`;
+        const is_highlighted_filter = `${is_highlighted ? `&filters[is_highlighted][$eq]=${is_highlighted}` : ``}`;
+        const ordered_filter = `${ordered ? `&sort[6]=urutan:asc` : ``}`;
 
-        const request = await fetch(`${API}portfolios?${fields}${is_active_filter}`, {
+        const request = await fetch(`${API}portfolios?${fields}${is_active_filter}${is_highlighted_filter}${ordered_filter}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

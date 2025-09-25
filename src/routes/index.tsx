@@ -1,8 +1,8 @@
 import { 
     component$,
-    useSignal,
-    type QRL,
-    $,
+    // useSignal,
+    // type QRL,
+    // $,
     isDev
 } from "@builder.io/qwik";
 import { routeLoader$ } from '@builder.io/qwik-city';
@@ -10,13 +10,19 @@ import type { DocumentHead } from "@builder.io/qwik-city";
 
 import { Header } from "~/components/ui-main/header";
 import { Footer } from "~/components/ui-main/footer";
-import { Portfolio } from "~/components/ui-main/portfolio";
+import {
+    HighlightedPortfolio, 
+    // Portfolio
+} from "~/components/ui-main/portfolio";
 
 import ArrowDown from "~/assets/icons/arrow-down.svg";
-import { Button } from "~/components/ui-main/button";
+// import { Button } from "~/components/ui-main/button";
 
 import { getHomepages } from "~/services/pages";
-import type { Cta, Section } from "~/services/pages";
+import type {
+    Cta,
+    // Section
+} from "~/services/pages";
 import { getPortfolios } from "~/services/portfolios";
 import { getHeader, getFooter } from "~/services/components";
 
@@ -44,18 +50,19 @@ export const useGetContent = routeLoader$(
 
 export const useGetPortfolios = routeLoader$(
     async () => {
-        return getPortfolios({ is_active: true });
+        return getPortfolios({ is_active: true, is_highlighted: true, ordered: true });
     }
 );
 
 export default component$(() => {
     const { value: konten } = useGetContent();
+    const { value: portfolios } = useGetPortfolios();
 
     const { homepages } = konten;
 
     const hero = homepages.data?.hero;
     const layanan_kami = homepages.data?.layanan_kami;
-    const portofolio = homepages.data?.portofolio;
+    // const portofolio = homepages.data?.portofolio;
     const cta = homepages.data?.cta;
 
 	return (
@@ -83,6 +90,17 @@ export default component$(() => {
                             </p>
                         </span>
                     </article>
+
+                    <section class="no-scrollbar h-fit flex gap-x-8 items-end w-full *:even:h-[300px] *:odd:h-[400px] *:even:w-[500px] *:odd:w-[360px] overflow-x-scroll">
+                        {portfolios.data.length ? portfolios.data.map(( data ) => {
+                            return (
+                                <HighlightedPortfolio
+                                    key={data.id}
+                                    data={data}
+                                />
+                            )
+                        }): null}
+                    </section>
                 </section>
 
 				<section class="font-poppins flex flex-col gap-y-9">
@@ -130,7 +148,7 @@ export default component$(() => {
                     ) : null}
                 </section>
 
-				<PortfolioSection konten={portofolio}  />
+				{/* <PortfolioSection konten={portofolio}  /> */}
 
                 <BookAMeetingSection konten={cta} />
 			</main>
@@ -140,93 +158,93 @@ export default component$(() => {
 	);
 });
 
-const PortfolioSection = component$(({ konten }: { konten?: Section; }) => {
-    const { value: portfolios } = useGetPortfolios();
+// const PortfolioSection = component$(({ konten }: { konten?: Section; }) => {
+//     const { value: portfolios } = useGetPortfolios();
 
-    const sliderRef = useSignal<Element>();
+//     const sliderRef = useSignal<Element>();
 
-    const sliderHandler: QRL = $(() => {
-        if (sliderRef.value) {
-            const maxScrollLeft = sliderRef.value.scrollWidth - sliderRef.value.clientWidth;
-            const childWidth = sliderRef.value.firstElementChild?.clientWidth as number;
+//     const sliderHandler: QRL = $(() => {
+//         if (sliderRef.value) {
+//             const maxScrollLeft = sliderRef.value.scrollWidth - sliderRef.value.clientWidth;
+//             const childWidth = sliderRef.value.firstElementChild?.clientWidth as number;
 
-            if (sliderRef.value.scrollLeft < maxScrollLeft) {
-                sliderRef.value.scrollBy({
-                    left: childWidth + 48,
-                    behavior: 'smooth',
-                });
-            }
-        }
-    });
+//             if (sliderRef.value.scrollLeft < maxScrollLeft) {
+//                 sliderRef.value.scrollBy({
+//                     left: childWidth + 48,
+//                     behavior: 'smooth',
+//                 });
+//             }
+//         }
+//     });
 
-    const previousHandler: QRL = $(() => {
-        if (sliderRef.value) {
-            const childWidth = sliderRef.value.firstElementChild?.clientWidth as number;
-            const scrollAmount = childWidth;
+//     const previousHandler: QRL = $(() => {
+//         if (sliderRef.value) {
+//             const childWidth = sliderRef.value.firstElementChild?.clientWidth as number;
+//             const scrollAmount = childWidth;
     
-            if (sliderRef.value.scrollLeft > 0) {
-                sliderRef.value.scrollBy({
-                    left: -scrollAmount - 48,
-                    behavior: 'smooth',
-                });
-            }
-        }
-    });
+//             if (sliderRef.value.scrollLeft > 0) {
+//                 sliderRef.value.scrollBy({
+//                     left: -scrollAmount - 48,
+//                     behavior: 'smooth',
+//                 });
+//             }
+//         }
+//     });
 
-    return (
-        <section class="font-poppins flex flex-col gap-y-9" id={`portfolio`}>
+//     return (
+//         <section class="font-poppins flex flex-col gap-y-9" id={`portfolio`}>
 
-            <section class="flex flex-wrap gap-6 items-end justify-between">
+//             <section class="flex flex-wrap gap-6 items-end justify-between">
 
-                <article class="flex flex-col gap-y-4 md:gap-y-6">
+//                 <article class="flex flex-col gap-y-4 md:gap-y-6">
 
-                    <h1
-                        class="text-h1-small md:text-h1-medium lg:text-h1-large font-medium text-custom-neutral-0"
-                        dangerouslySetInnerHTML={konten?.judul || "Your headline"}
-                    />
+//                     <h1
+//                         class="text-h1-small md:text-h1-medium lg:text-h1-large font-medium text-custom-neutral-0"
+//                         dangerouslySetInnerHTML={konten?.judul || "Your headline"}
+//                     />
 
-                    <p
-                        class="text-label-medium md:text-label-large text-custom-neutral-100 max-w-[500px]"
-                        dangerouslySetInnerHTML={konten?.judul_pendukung || "Your supporting headline"}
-                    />
-                </article>
+//                     <p
+//                         class="text-label-medium md:text-label-large text-custom-neutral-100 max-w-[500px]"
+//                         dangerouslySetInnerHTML={konten?.judul_pendukung || "Your supporting headline"}
+//                     />
+//                 </article>
 
-                <section class="w-full sm:w-fit flex justify-end gap-4">
-                    <Button
-                        variant = "secondary"
-                        size = "small"
-                        onClick$={previousHandler}
-                    >
-                        <p>Previous</p>
-                    </Button>
+//                 <section class="w-full sm:w-fit flex justify-end gap-4">
+//                     <Button
+//                         variant = "secondary"
+//                         size = "small"
+//                         onClick$={previousHandler}
+//                     >
+//                         <p>Previous</p>
+//                     </Button>
 
-                    <Button
-                        variant = "secondary"
-                        size = "small"
-                        onClick$={sliderHandler}
-                    >
-                        <p>Next</p>
-                    </Button>
-                </section>
-            </section>
+//                     <Button
+//                         variant = "secondary"
+//                         size = "small"
+//                         onClick$={sliderHandler}
+//                     >
+//                         <p>Next</p>
+//                     </Button>
+//                 </section>
+//             </section>
 
-            <section 
-                class="flex gap-x-12 overflow-x-scroll"
-                style={{ scrollbarWidth: "none" }}
-                ref={sliderRef}
-            >
-                {portfolios.data.length ? portfolios.data.map(( data ) => {
-                    return (
-                        <Portfolio
-                            key={data.id}
-                            data={data}
-                        />
-                    )
-                }): null}
-            </section>
-        </section>
-    );
-});
+//             <section 
+//                 class="flex gap-x-12 overflow-x-scroll"
+//                 style={{ scrollbarWidth: "none" }}
+//                 ref={sliderRef}
+//             >
+//                 {portfolios.data.length ? portfolios.data.map(( data ) => {
+//                     return (
+//                         <Portfolio
+//                             key={data.id}
+//                             data={data}
+//                         />
+//                     )
+//                 }): null}
+//             </section>
+//         </section>
+//     );
+// });
 
 const BookAMeetingSection = component$(({ konten }: { konten?: Cta; }) => {
     return (
