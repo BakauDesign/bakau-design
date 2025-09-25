@@ -79,11 +79,7 @@ export default component$(() => {
                                         </div>
 
                                         <p>
-                                            {asset.data[0].harga > 0 ? (
-                                                `${asset.data[0].harga}$`
-                                            ) : (
-                                                "Free"
-                                            )} 
+                                            {asset.data[0].harga}
                                         </p>
                                     </div>
                                 </Button>
@@ -99,22 +95,22 @@ export default component$(() => {
                             <ul class="flex flex-col gap-y-4 *:flex *:items-center *:justify-between *:gap-x-6 *:font-poppins *:text-label-small *:sm:text-label-medium *:text-custom-neutral-100">
                                 <li>
                                     <p>{ konten.templatePages.data?.label_kompatibel || "-" }</p>
-                                    <p>{asset.data[0].kompatibel || "-"}</p>
+                                    <p>{asset.data[0].informasi_aset.kompatibel || "-"}</p>
                                 </li>
 
                                 <li>
                                     <p>{ konten.templatePages.data?.label_lisensi || "-" }</p>
-                                    <p>{asset.data[0].lisensi || "-"}</p>
+                                    <p>{asset.data[0].informasi_aset.lisensi || "-"}</p>
                                 </li>
 
                                 <li>
                                     <p>{ konten.templatePages.data?.label_rilis || "-" }</p>
-                                    <p>{asset.data[0].rilis || "-"}</p>
+                                    <p>{asset.data[0].informasi_aset.rilis || "-"}</p>
                                 </li>
 
                                 <li>
                                     <p>{ konten.templatePages.data?.label_pembuat || "-" }</p>
-                                    <p>{asset.data[0].pembuat || "-"}</p>
+                                    <p>{asset.data[0].informasi_aset.pembuat || "-"}</p>
                                 </li>
                             </ul>
                         </article>

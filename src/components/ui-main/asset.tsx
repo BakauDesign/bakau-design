@@ -8,15 +8,17 @@ export type Asset = {
     judul: string;
     deskripsi: string;
     thumbnail: Format;
-    harga: number;
+    harga: string;
     link_pembelian: string | null;
     galeri: Array<Format>;
     penanda: string;
     slug: string;
-    kompatibel: string;
-    lisensi: string;
-    rilis: string;
-    pembuat: string;
+    informasi_aset: {
+        kompatibel: string;
+        lisensi: string;
+        rilis: string;
+        pembuat: string;
+    };
 };
 
 type Format = {
