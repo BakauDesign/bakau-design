@@ -1,7 +1,7 @@
 import { component$, isDev } from '@builder.io/qwik';
 import { Link } from '@builder.io/qwik-city';
 
-const API = `${isDev ? "http://localhost:1337" : "https://splendid-prosperity-45273ea083.strapiapp.com"}`;
+const API = `${isDev ? "http://localhost:1337" : ""}`;
 
 // type Thumbnail = {
 //     formats: {
