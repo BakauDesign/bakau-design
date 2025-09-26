@@ -10,7 +10,7 @@ import { Asset } from "~/components/ui-main/asset";
 import { type Cta, getTemplateDetailPages } from "~/services/pages";
 import { getFooter, getHeader } from "~/services/components";
 
-const API = `${isDev ? "http://localhost:1337" : "https://splendid-prosperity-45273ea083.strapiapp.com"}`;
+const API = `${isDev ? "http://localhost:1337" : ""}`;
 
 export const useGetAssetsDetail = routeLoader$(
 	async (event) => {
