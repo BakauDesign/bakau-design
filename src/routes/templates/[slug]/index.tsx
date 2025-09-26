@@ -117,7 +117,7 @@ export default component$(() => {
                     </section>
                 </section>
                 
-                <section class="pt-16 grid gap-8 grid-cols-[repeat(auto-fill,minmax(360px,1fr))] lg:grid-cols-[repeat(auto-fill,minmax(656px,1fr))] *:w-full *:h-[600px] *:object-cover *:rounded-2xl border-t-[1.5px] border-solid border-t-custom-neutral-700">
+                <section class="pt-16 grid gap-8 grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 *:object-cover *:rounded-2xl border-t-[1.5px] border-solid border-t-custom-neutral-700">
                     {asset.data[0].galeri ? (asset.data[0].galeri.map((galeri) => {
                         return (
                             // <img height={400} width={400} src={galeri.formats.small.url} key={"000"} />
