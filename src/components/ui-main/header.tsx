@@ -36,7 +36,7 @@ export const Header = component$(({ konten }: { konten?: HeaderContent | null })
             />
 
             <nav class={`
-                hidden lg:flex gap-x-12 *:text-neutral-0 items-center *:text-custom-neutral-100
+                hidden xl:flex gap-x-12 *:text-neutral-0 items-center *:text-custom-neutral-100
             `}>
                 {konten?.menu ? konten.menu.map((navMenu) => {
                     const pathsWithLocale = ['/', '/portfolio', '/about-us', '/templates', ''];
@@ -87,12 +87,14 @@ export const Header = component$(({ konten }: { konten?: HeaderContent | null })
                     value={language.value === 'inggris'}
                 />
             </section> */}
-            <ToggleLanguage />
+            <div class="hidden xl:block">
+                <ToggleLanguage />
+            </div>
 
             <img
-                height={24}
-                width={24}
-                class='block lg:hidden gap-x-12 *:text-neutral-0 items-center'
+                height={48}
+                width={48}
+                class='block xl:hidden gap-x-12 *:text-neutral-0 items-center h-[32px] w-[32px] sm:h-[48px] sm:w-[48px]'
                 src={HamburgerMenu}
                 alt="Hamburger menu"
                 onClick$={() => isOpen.value = true}
@@ -101,7 +103,7 @@ export const Header = component$(({ konten }: { konten?: HeaderContent | null })
             <aside
                 class={`
                     p-4 top-0 bottom-0 left-0 right-0 fixed flex flex-col justify-between bg-custom-neutral-700 transition-all duration-300
-                    ${isOpen.value ? "translate-x-[0] lg:translate-x-[100vw]" : "translate-x-[100vw] lg:translate-x-[100vw]"}
+                    ${isOpen.value ? "translate-x-[0] xl:translate-x-[100vw]" : "translate-x-[100vw] xl:translate-x-[100vw]"}
                 `}
             >
                 <div class='w-full flex gap-x-4 justify-between items-center'>
@@ -123,26 +125,45 @@ export const Header = component$(({ konten }: { konten?: HeaderContent | null })
                 </div>
 
                 <nav class='flex flex-col gap-x-12 *:text-neutral-0 items-center justify-center gap-y-6 *:text-custom-neutral-100'>
-                    <Link class='hover:text-custom-neutral-0' href="/">home</Link>
-                    <Link class='hover:text-custom-neutral-0' href="/#portfolio">portfolio</Link>
-                    <Link class='hover:text-custom-neutral-0' href="/about-us">about us</Link>
-                    <Link href="/templates" class='flex gap-x-1.5 items-center hover:text-custom-neutral-0'>
-                        <p>templates</p>
-                        <p class='py-[2px] px-2 bg-[#D81313] rounded-full flex items-center gap-x-1.5'>Free</p>
-                    </Link>
+                    {konten?.menu ? konten.menu.map((navMenu) => {
+                        const pathsWithLocale = ['/', '/portfolio', '/about-us', '/templates', ''];
 
-                    <div>
-                        <Button
-                            variant = "primary"
-                            size = "small"
-                            onClick$={() => window.open("https://calendly.com/hi-bakaudesign")}
-                        >
-                            <p>Book a Meeting</p>
-                        </Button>
-                    </div>
+                        const [path, fragment] = navMenu.href.split('#');
+
+                        const shouldAddLocale = pathsWithLocale.includes(path);
+
+                        let hrefWithLocale = path;
+                        if (shouldAddLocale) {
+                            const url = new URL(path, location.url.origin);
+                            url.searchParams.set('locale', langInUrl || 'id');
+                            hrefWithLocale = url.pathname + url.search;
+                        }
+
+                        if (fragment) {
+                            hrefWithLocale += `#${fragment}`;
+                        }
+
+                        return (
+                            <Link key={navMenu.id} class='hover:text-custom-neutral-0' href={hrefWithLocale}>{ navMenu.label }</Link>
+                        );
+                    }) : null}
+                    
+                    <ToggleLanguage />
+
+                    {konten?.cta ? (
+                        <div>
+                            <Button
+                                variant = "primary"
+                                size = "small"
+                                onClick$={() => window.open(konten.cta.link)}
+                            >
+                                <p>{ konten.cta.judul }</p>
+                            </Button>
+                        </div>
+                    ) : null}
                 </nav>
 
-                <p>© Bakau Design 2024</p>
+                <p class="text-custom-neutral-300">© Bakau Design 2024</p>
             </aside>
         </header>
     );

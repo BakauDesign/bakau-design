@@ -118,7 +118,7 @@ const WorkflowSection = component$(({ alur_kerja_kami }: { alur_kerja_kami?: Wor
                 </p>
             </article>
 
-            <section class="grid grid-cols-(--cols-workflow) gap-8">
+            <section class="grid cols-workflow gap-8">
                 {alur_kerja_kami?.daftar_alur_kerja ? alur_kerja_kami.daftar_alur_kerja.map(( alurKerja ) => 
                     <Workflow
                         key={alurKerja.id}
@@ -176,7 +176,7 @@ const BookAMeetingSection = component$(({ konten }: { konten?: Cta; }) => {
             <a
                 href={konten?.link || ""}
                 rel="noopener noreferrer"
-                class="text-h1-small md:text-h1-medium lg:text-h1-large bg-neutral-100 hover:bg-[radial-gradient(50%_50%_at_50%_50%,#CCC_0%,#FFF_50%,#999_100%)] font-museomoderno font-medium bg-clip-text"
+                class="text-center text-h1-small md:text-h1-medium lg:text-h1-large bg-neutral-100 hover:bg-[radial-gradient(50%_50%_at_50%_50%,#CCC_0%,#FFF_50%,#999_100%)] font-museomoderno font-medium bg-clip-text"
                 style={{ WebkitTextFillColor: "transparent" }}
                 dangerouslySetInnerHTML={konten?.judul || "Your CTA"}
             />

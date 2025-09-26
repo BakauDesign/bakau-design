@@ -95,22 +95,22 @@ export default component$(() => {
                             <ul class="flex flex-col gap-y-4 *:flex *:items-center *:justify-between *:gap-x-6 *:font-poppins *:text-label-small *:sm:text-label-medium *:text-custom-neutral-100">
                                 <li>
                                     <p>{ konten.templatePages.data?.label_kompatibel || "-" }</p>
-                                    <p>{asset.data[0].informasi_aset.kompatibel || "-"}</p>
+                                    <p>{asset.data[0].informasi_aset?.kompatibel || "-"}</p>
                                 </li>
 
                                 <li>
                                     <p>{ konten.templatePages.data?.label_lisensi || "-" }</p>
-                                    <p>{asset.data[0].informasi_aset.lisensi || "-"}</p>
+                                    <p>{asset.data[0].informasi_aset?.lisensi || "-"}</p>
                                 </li>
 
                                 <li>
                                     <p>{ konten.templatePages.data?.label_rilis || "-" }</p>
-                                    <p>{asset.data[0].informasi_aset.rilis || "-"}</p>
+                                    <p>{asset.data[0].informasi_aset?.rilis || "-"}</p>
                                 </li>
 
                                 <li>
                                     <p>{ konten.templatePages.data?.label_pembuat || "-" }</p>
-                                    <p>{asset.data[0].informasi_aset.pembuat || "-"}</p>
+                                    <p>{asset.data[0].informasi_aset?.pembuat || "-"}</p>
                                 </li>
                             </ul>
                         </article>
@@ -118,22 +118,20 @@ export default component$(() => {
                 </section>
                 
                 <section class="pt-16 grid gap-8 grid-cols-[repeat(auto-fill,minmax(360px,1fr))] lg:grid-cols-[repeat(auto-fill,minmax(656px,1fr))] *:w-full *:h-[600px] *:object-cover *:rounded-2xl border-t-[1.5px] border-solid border-t-custom-neutral-700">
-                    {asset.data[0].galeri.map((galeri, _) => {
+                    {asset.data[0].galeri ? (asset.data[0].galeri.map((galeri) => {
                         return (
                             // <img height={400} width={400} src={galeri.formats.small.url} key={"000"} />
-							<picture class="overflow-hidden rounded-2xl *:h-full *:w-full *:object-cover" key={_}>
-								<source srcset={`${API}${galeri.formats.large.url}`}  media="(min-width: 1080px)" />
-								<source srcset={`${API}${galeri.formats.medium.url}`}  media="(min-width: 728px)" />
+							<picture class="overflow-hidden rounded-2xl *:h-full *:w-full *:object-cover" key={galeri.documentId}>
 								<img
-									height={galeri.formats.small.height}
-									width={galeri.formats.small.width}
+									height={1000}
+									width={1000}
 									class="h-full w-full object-cover"
-									src={`${API}${galeri.formats.small.url}`} 
-									alt={`Thumbnail ${asset.data[0].judul}`}
+									src={`${API}${galeri.url}`} 
+									alt={`${galeri.name}`}
 								/>
 							</picture>
                         );
-                    })}
+                    })) : null}
                 </section>
 
                 {/* {data?.length as number > 0 && ( */}
@@ -145,7 +143,7 @@ export default component$(() => {
                             </h1>
                         </article>
 
-                        <section class="grid gap-x-9 gap-y-12 grid-cols-(--cols-assets)">
+                        <section class="grid gap-x-9 gap-y-12 cols-assets">
                             {alternativeAssets.data.map((asset) => {
                                 return (
                                     <Asset

@@ -113,19 +113,9 @@ export async function getAssetsDetail({
 }: AssetsQuery) {
     try {
         const fields = `
-            &fields[0]=id
-            &fields[1]=judul
-            &fields[2]=deskripsi
-            &fields[3]=harga
-            &fields[4]=penanda
-            &fields[6]=kompatibel
-            &fields[7]=lisensi
-            &fields[8]=rilis
-            &fields[9]=pembuat
-            &fields[10]=link_pembelian
             ${is_active ? `&filters[is_active][$eq]=${is_active}` : ``}
             ${params.slug ? `&filters[slug][$eq]=${params.slug}` : ``}
-            &populate=*
+            &populate=all
         `;
         
         const singleLineFields = fields.replace(/\s+/g, '');

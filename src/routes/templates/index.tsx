@@ -1,5 +1,5 @@
 import { component$ } from "@builder.io/qwik";
-import { routeLoader$ } from '@builder.io/qwik-city';
+import { routeLoader$, useLocation } from '@builder.io/qwik-city';
 
 import { Header } from "~/components/ui-main/header";
 import { Footer } from "~/components/ui-main/footer";
@@ -26,6 +26,9 @@ export const useGetAssets = routeLoader$(
 );
 
 export default component$(() => {
+	const location = useLocation();
+	const langInUrl = location.url.searchParams.get('locale');
+
     const { value: assets } = useGetAssets();
 
 	const { value: konten } = useGetContent();
@@ -69,7 +72,7 @@ export default component$(() => {
 
                     
                     {assets.data.length ? (
-                        <section class="grid gap-x-9 gap-y-12 grid-cols-(--cols-assets)">
+                        <section class="grid gap-x-9 gap-y-12 cols-assets">
                             {assets.data.map((asset) => {
                                 return (
                                     <Asset
@@ -82,7 +85,11 @@ export default component$(() => {
                     ) : (
                         <div class="self-center w-full max-w-[800px] h-[300px] flex items-center justify-center">
                             <p class="font-poppins text-body-small sm:text-body-medium text-center text-custom-neutral-0">
-                                Templates are not available yet, we are still working on it.
+                                { langInUrl === "id" ? (
+									"Templat belum tersedia, kami masih mengerjakannya."
+								) : (
+									"Templates are not available yet, we are still working on it."
+								)}
                             </p>
                         </div>
                     )}

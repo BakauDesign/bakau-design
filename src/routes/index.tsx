@@ -91,7 +91,7 @@ export default component$(() => {
                         </span>
                     </article>
 
-                    <section class="no-scrollbar h-fit flex gap-x-8 items-end w-full *:even:h-[300px] *:odd:h-[400px] *:even:w-[500px] *:odd:w-[360px] overflow-x-scroll">
+                    <section class="no-scrollbar h-fit flex gap-x-8 items-end w-full *:even:h-[300px] *:odd:h-[400px] *:even:min-w-[500px] *:odd:min-w-[360px] overflow-x-scroll">
                         {portfolios.data.length ? portfolios.data.map(( data ) => {
                             return (
                                 <HighlightedPortfolio
@@ -119,7 +119,7 @@ export default component$(() => {
 
                     {layanan_kami?.daftar_layanan ? (
                         <ul class={`
-                            *:p-8 *:h-[300px] *:w-full *:max-w-[500px] *:flex *:flex-col *:gap-y-6 *:justify-between *:rounded-2xl *:bg-[linear-gradient(180deg,#1F1F1F_0%,#1A1A1A_100%)]
+                            *:p-8 *:min-h-[300px] *:w-full *:max-w-[500px] *:flex *:flex-col *:gap-y-6 *:justify-between *:rounded-2xl *:bg-[linear-gradient(180deg,#1F1F1F_0%,#1A1A1A_100%)]
                             flex flex-col lg:justify-end xl:flex-wrap md:flex-row gap-9
                         `}>
                             {layanan_kami.daftar_layanan.map((layanan) => (
@@ -138,6 +138,8 @@ export default component$(() => {
                                         <source srcset={`${API}${layanan.cover.url || ""}`}  media="(min-width: 1080px)" />
                                         <source srcset={`${API}${layanan.cover.url || ""}`}  media="(min-width: 728px)" />
                                         <img
+                                            height={500}
+                                            width={500}
                                             src={`${API}${layanan.cover.url || ""}`} 
                                             alt={`Thumbnail ${layanan.nama}`}
                                         />
@@ -253,7 +255,7 @@ const BookAMeetingSection = component$(({ konten }: { konten?: Cta; }) => {
                 href={konten?.link || ""}
                 target="_blank"
                 rel="noopener noreferrer"
-                class="text-h1-small md:text-h1-medium lg:text-h1-large bg-neutral-100 hover:bg-[radial-gradient(50%_50%_at_50%_50%,#CCC_0%,#FFF_50%,#999_100%)] font-museomoderno font-medium bg-clip-text"
+                class="text-center text-h1-small md:text-h1-medium lg:text-h1-large bg-neutral-100 hover:bg-[radial-gradient(50%_50%_at_50%_50%,#CCC_0%,#FFF_50%,#999_100%)] font-museomoderno font-medium bg-clip-text"
                 style={{ WebkitTextFillColor: "transparent" }}
                 dangerouslySetInnerHTML={konten?.judul || "Your CTA"}
             />

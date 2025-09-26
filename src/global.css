@@ -181,6 +181,14 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
+
+  .cols-workflow {
+    @apply grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 min-[1536px]:grid-cols-4;
+  }
+
+  .cols-assets {
+    @apply grid-cols-1 lg:grid-cols-2 min-[1536px]:grid-cols-4;
+  }
 }
 
 @theme {
@@ -377,8 +385,8 @@
   --gradient-green-0: linear-gradient(270deg,#80C955 0%,#FFF 100%);
 
   --cols-faq: repeat(auto-fit,minmax(360px,1fr));
-  --cols-workflow: repeat(auto-fit,minmax(420px,1fr));
-  --cols-assets: repeat(auto-fill,minmax(420px,1fr));
+  /* --cols-workflow: repeat(auto-fit,minmax(420px,1fr)); */
+  /* --cols-assets: repeat(auto-fill,minmax(420px,1fr)); */
 }
 
 html {

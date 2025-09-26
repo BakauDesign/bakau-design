@@ -1,5 +1,5 @@
 import { component$, isDev } from '@builder.io/qwik';
-import { Link } from '@builder.io/qwik-city';
+import { Link, useLocation } from '@builder.io/qwik-city';
 
 const API = `${isDev ? "http://localhost:1337" : ""}`;
 
@@ -34,6 +34,9 @@ export type Portfolio = {
 };
 
 export const Portfolio = component$<{ data: Portfolio }>(({ data: portfolio }) => {
+    const location = useLocation();
+    const langInUrl = location.url.searchParams.get('locale');
+    
     return (
         <article class='flex flex-col gap-y-8 min-w-[328px] md:min-w-[580px]'>
 
@@ -44,8 +47,8 @@ export const Portfolio = component$<{ data: Portfolio }>(({ data: portfolio }) =
                     {/* <source srcset={`${API}${portfolio.thumbnail.formats.large.url}`}  media="(min-width: 1080px)" />
                     <source srcset={`${API}${portfolio.thumbnail.formats.medium.url}`}  media="(min-width: 728px)" /> */}
                     <img
-                        // height={portfolio.thumbnail.url}
-                        // width={portfolio.thumbnail.url}
+                        height={500}
+                        width={500}
                         class="h-full w-full object-cover object-top"
                         src={`${API}${portfolio.thumbnail.url}`} 
                         alt={`Thumbnail ${portfolio.nama}`}
@@ -69,7 +72,7 @@ export const Portfolio = component$<{ data: Portfolio }>(({ data: portfolio }) =
                         href={portfolio.url} 
                         class='p-4 aspect-square rounded-full cursor-fancy text-custom-neutral-0 bg-lime-500 flex items-center justify-center font-museomoderno text-label-small sm:text-label-medium font-medium'
                     >
-                        VISIT
+                        { langInUrl === "id" ? "KUNJUNGI" : "VISIT" }
                     </Link>
                 </div>
             </figure>
@@ -104,6 +107,9 @@ export const HighlightedPortfolio = component$<{
     // width,
     data: portfolio
 }) => {
+    const location = useLocation();
+    const langInUrl = location.url.searchParams.get('locale');
+
     return (
         <article
             class='flex flex-col justify-end h-full w-full'
@@ -124,8 +130,8 @@ export const HighlightedPortfolio = component$<{
                     {/* <source srcset={`${API}${portfolio.thumbnail.formats.large.url}`}  media="(min-width: 1080px)" />
                     <source srcset={`${API}${portfolio.thumbnail.formats.medium.url}`}  media="(min-width: 728px)" /> */}
                     <img
-                        // height={portfolio.thumbnail.url}
-                        // width={portfolio.thumbnail.url}
+                        height={1000}
+                        width={1000}
                         class="h-full w-full object-cover object-top"
                         src={`${API}${portfolio.thumbnail.url}`} 
                         alt={`Thumbnail ${portfolio.nama}`}
@@ -137,7 +143,7 @@ export const HighlightedPortfolio = component$<{
                         href={portfolio.url} 
                         class='p-4 aspect-square rounded-full cursor-fancy text-custom-neutral-0 bg-lime-500 flex items-center justify-center font-museomoderno text-label-small sm:text-label-medium font-medium'
                     >
-                        VISIT
+                        { langInUrl === "id" ? "LIHAT" : "VISIT" }
                     </Link>
                 </div>
             </figure>

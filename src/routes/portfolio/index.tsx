@@ -62,8 +62,6 @@ export default component$(() => {
     // const portofolio = homepages.data?.portofolio;
     const cta = homepages.data?.cta;
 
-    console.info(portfolios.data)
-
 	return (
 		<>
 			<Header konten={konten.header.data} />
@@ -87,7 +85,7 @@ export default component$(() => {
                     </section>
 
                     <section 
-                        class="grid gap-12 grid-cols-2"
+                        class="grid gap-12 grid-cols-1 xl:grid-cols-2"
                     >
                         {portfolios.data.length ? portfolios.data.map(( data ) => {
                             return (
@@ -115,7 +113,7 @@ const BookAMeetingSection = component$(({ konten }: { konten?: Cta; }) => {
                 href={konten?.link || ""}
                 target="_blank"
                 rel="noopener noreferrer"
-                class="text-h1-small md:text-h1-medium lg:text-h1-large bg-neutral-100 hover:bg-[radial-gradient(50%_50%_at_50%_50%,#CCC_0%,#FFF_50%,#999_100%)] font-museomoderno font-medium bg-clip-text"
+                class="text-center text-h1-small md:text-h1-medium lg:text-h1-large bg-neutral-100 hover:bg-[radial-gradient(50%_50%_at_50%_50%,#CCC_0%,#FFF_50%,#999_100%)] font-museomoderno font-medium bg-clip-text"
                 style={{ WebkitTextFillColor: "transparent" }}
                 dangerouslySetInnerHTML={konten?.judul || "Your CTA"}
             />
