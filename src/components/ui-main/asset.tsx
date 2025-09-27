@@ -52,7 +52,7 @@ export const Asset = component$<{ data: Asset }>(({ data: asset }) => {
 
     return (
         <figure class='font-poppins flex flex-col gap-y-8 relative justify-between'>
-            <picture class="h-[360px] lg:h-[400px] overflow-hidden rounded-2xl *:h-full *:w-full *:object-cover">
+            <picture class="overflow-hidden rounded-2xl *:h-full *:w-full *:object-cover">
                 {/* <source srcset={`${API}${asset.thumbnail.formats.large.url}`}  media="(min-width: 1080px)" />
                 <source srcset={`${API}${asset.thumbnail.formats.medium.url}`}  media="(min-width: 728px)" /> */}
                 <img
