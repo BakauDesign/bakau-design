@@ -152,7 +152,7 @@ export async function getAlternativeAssets({
 }
 
 export async function getAssetsDetail({
-    event: { params },
+    event: { params, query },
     is_active = true
 }: AssetsQuery) {
     try {
@@ -160,6 +160,7 @@ export async function getAssetsDetail({
             ${is_active ? `&filters[is_active][$eq]=${is_active}` : ``}
             ${params.slug ? `&filters[slug][$eq]=${params.slug}` : ``}
             &populate=all
+            &locale=${query.get('locale') || "id"}
         `;
         
         const singleLineFields = fields.replace(/\s+/g, '');
@@ -174,7 +175,7 @@ export async function getAssetsDetail({
         const response: QueryResponse = await request.json();
 
         return {
-            ...response,
+            response: response,
             success: true,
             message: "Success fetching assets"
         };
@@ -185,7 +186,7 @@ export async function getAssetsDetail({
         return {
             success: false,
             message: "Error fetching assets",
-            data: []
+            response: null
         };
     }
 }

@@ -14,7 +14,13 @@ const API = `${isDev ? "http://localhost:1337" : ""}`;
 
 export const useGetAssetsDetail = routeLoader$(
 	async (event) => {
-		return await getAssetsDetail({ event });
+        const locale = event.url.searchParams.get('locale') || 'id';
+		const asset = await getAssetsDetail({ event });
+
+        if (asset.response?.data.length) {
+            return asset.response;
+        }
+        throw event.redirect(301, `/templates?locale=${locale}`);
 	}
 );
 
@@ -36,6 +42,10 @@ export const useGetContent = routeLoader$(
 
 export const head: DocumentHead = ({ resolveValue }) => {
     const asset = resolveValue(useGetAssetsDetail);
+
+    if (!asset.data.length) {
+        return {};
+    }
 
     return {
         title: `${asset.data[0].judul} | Bakau Design`,

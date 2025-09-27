@@ -32,12 +32,7 @@ export const ToggleLanguage = component$(() => {
             localStorage.setItem('bakau-design-language', 'indonesia');
         }
 
-        
         const langToUse = language.value === 'indonesia' ? 'id' : 'en';
-
-        console.info(langInUrl)
-
-        // console.info(langToUse, langInUrl, langToUse !== langInUrl)
         
         if (langToUse !== langInUrl) {
             nav(`?locale=${langToUse}`, { replaceState: true });
