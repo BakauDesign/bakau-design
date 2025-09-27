@@ -152,7 +152,7 @@ export async function getAlternativeAssets({
 }
 
 export async function getAssetsDetail({
-    event: { params, query },
+    event: { params },
     is_active = true
 }: AssetsQuery) {
     try {
@@ -160,7 +160,6 @@ export async function getAssetsDetail({
             ${is_active ? `&filters[is_active][$eq]=${is_active}` : ``}
             ${params.slug ? `&filters[slug][$eq]=${params.slug}` : ``}
             &populate=all
-            &locale=${query.get('locale') || "id"}
         `;
         
         const singleLineFields = fields.replace(/\s+/g, '');
