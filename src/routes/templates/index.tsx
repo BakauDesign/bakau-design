@@ -1,5 +1,5 @@
 import { component$ } from "@builder.io/qwik";
-import { routeLoader$, useLocation } from '@builder.io/qwik-city';
+import { type DocumentHead, routeLoader$, useLocation } from '@builder.io/qwik-city';
 
 import { Header } from "~/components/ui-main/header";
 import { Footer } from "~/components/ui-main/footer";
@@ -7,7 +7,29 @@ import { Asset } from "~/components/ui-main/asset";
 import { getAssets } from "~/services/assets";
 import { type Cta, getTemplatepages } from "~/services/pages";
 import { getFooter, getHeader } from "~/services/components";
+import { meta } from "~/assets/meta-data";
 // import { IAsset } from "~/interfaces";
+
+export const useGetLocale = routeLoader$(({ url }) => {
+    const locale = url.searchParams.get('locale') || 'id';
+    return locale;
+});
+
+export const head: DocumentHead = ({ resolveValue }) => {
+    const locale = resolveValue(useGetLocale);
+
+    const metaData = meta.template[locale as "id" | "en"];
+
+	return {
+		title: metaData.title,
+		meta: [
+			{
+				name: "description",
+				content: metaData.description
+			}
+		]
+	}
+};
 
 export const useGetContent = routeLoader$(
 	async (event) => {
@@ -118,8 +140,6 @@ const BookAMeetingSection = component$(({ konten }: { konten?: Cta; }) => {
         </section>
     );
 });
-
-// const assets: Array<IAsset> = [
     // {
 	// 	id: 1,
 	// 	title: "Creative Portfolio Template",

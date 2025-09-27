@@ -1,5 +1,5 @@
 import { component$, isDev } from "@builder.io/qwik";
-import { routeLoader$ } from '@builder.io/qwik-city';
+import { type DocumentHead, routeLoader$ } from '@builder.io/qwik-city';
 
 import { Header } from "~/components/ui-main/header";
 import { Footer } from "~/components/ui-main/footer";
@@ -33,6 +33,20 @@ export const useGetContent = routeLoader$(
         return { header, templatePages, footer };
     }
 );
+
+export const head: DocumentHead = ({ resolveValue }) => {
+    const asset = resolveValue(useGetAssetsDetail);
+
+    return {
+        title: `${asset.data[0].judul} | Bakau Design`,
+        meta: [
+            {
+                name: "description",
+                content: asset.data[0].deskripsi.substring(0, 120)
+            }
+        ]
+    }
+};
 
 export default component$(() => {
     const { value: asset } = useGetAssetsDetail();

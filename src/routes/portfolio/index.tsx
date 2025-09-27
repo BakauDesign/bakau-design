@@ -22,17 +22,28 @@ import type {
 } from "~/services/pages";
 import { getPortfolios } from "~/services/portfolios";
 import { getHeader, getFooter } from "~/services/components";
+import { meta } from "~/assets/meta-data";
 
 // const API = `${isDev ? "http://localhost:1337" : ""}`;
+export const useGetLocale = routeLoader$(({ url }) => {
+    const locale = url.searchParams.get('locale') || 'id';
+    return locale;
+});
 
-export const head: DocumentHead = {
-	title: "Bakau Design",
-	meta: [
-        {
-            name: "description",
-            content: "We Are Bakau Design A Solid Team, An Unstoppable Spirit"
-        }
-    ]
+export const head: DocumentHead = ({ resolveValue }) => {
+    const locale = resolveValue(useGetLocale);
+
+    const metaData = meta.portfolio[locale as "id" | "en"];
+
+    return {
+        title: metaData.title,
+        meta: [
+            {
+                name: "description",
+                content: metaData.description
+            }
+        ]
+    }
 };
 
 export const useGetContent = routeLoader$(

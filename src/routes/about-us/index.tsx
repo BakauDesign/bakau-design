@@ -1,5 +1,5 @@
 import { component$ } from "@builder.io/qwik";
-import { routeLoader$ } from '@builder.io/qwik-city';
+import { type DocumentHead, routeLoader$ } from '@builder.io/qwik-city';
 
 import { Header } from "~/components/ui-main/header";
 import { Footer } from "~/components/ui-main/footer";
@@ -20,6 +20,28 @@ import type {
 } from "~/services/pages";
 
 import { getHeader, getFooter } from "~/services/components";
+import { meta } from "~/assets/meta-data";
+
+export const useGetLocale = routeLoader$(({ url }) => {
+    const locale = url.searchParams.get('locale') || 'id';
+    return locale;
+});
+
+export const head: DocumentHead = ({ resolveValue }) => {
+    const locale = resolveValue(useGetLocale);
+
+    const metaData = meta.about_us[locale as "id" | "en"];
+
+    return {
+        title: metaData.title,
+        meta: [
+            {
+                name: "description",
+                content: metaData.description
+            }
+        ]
+    }
+};
 
 export const useGetContent = routeLoader$(
     async (event) => {
