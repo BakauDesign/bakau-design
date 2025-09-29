@@ -26,7 +26,11 @@ export const head: DocumentHead = ({ resolveValue }) => {
 			{
 				name: "description",
 				content: metaData.description
-			}
+			},
+			{
+                rel: "canonical",
+                href: 'https://bakaudesign.com/templates/?locale=id',
+            },
 		]
 	}
 };

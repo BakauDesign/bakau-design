@@ -17,7 +17,7 @@ export const onGet: RequestHandler = async (event) => {
             priority: 0.9,
         })),
         ...assets.data.map((portfolio) => ({
-            loc: portfolio.slug,
+            loc: `templates/${portfolio.slug}`,
             priority: 0.7
         }))
     ]);
